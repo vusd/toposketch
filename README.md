@@ -1,3 +1,7 @@
+---
+title: This is my title
+---
+
 <h2 style="text-align: center;"> A Test Title </h2>
 
 <p style="text-align: center;">
