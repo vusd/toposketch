@@ -1,33 +1,25 @@
 <h2 style="text-align: center;"> A Test Title </h2>
 
-<iframe style="text-align: center;" src="https://drive.google.com/file/d/0B1UoLxmyYQA1ZHA3ZW5iR09sRTA/preview" width="640" height="480"></iframe>
+<p style="text-align: center;">
+<iframe src="https://drive.google.com/file/d/0B1UoLxmyYQA1ZHA3ZW5iR09sRTA/preview" width="700" height="350"></iframe>
+</p>
 
 <p style="text-align: center;"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
 
-You can use the [editor on GitHub](https://github.com/ianlohjy/Github-Page-Playground/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+### A Point
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+![alt text](assets/face_space.png)
 
-### Markdown
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Another Point
 
-```markdown
-Syntax highlighted code block
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 
-# Header 1
-## Header 2
-### Header 3
+[More Information](url) 
 
-- Bulleted
-- List
 
-1. Numbered
-2. List
 
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
 ```
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
