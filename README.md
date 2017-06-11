@@ -85,7 +85,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
                     <p>Clear Path</p>
                 </button>
 
-                <div class='tool-button' class='file-input-container'> 
+                <div class='file-input-container tool-button'> 
                     <p>Add Grid</p>
                     <input id='load-grid-button' class='file-input-button' type='file'>
                 </div>
