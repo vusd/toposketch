@@ -20,8 +20,8 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 
 [More Information](url) 
 
-
 <!DOCTYPE html>
+
 <html>
     
     <head>
@@ -89,7 +89,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 
                 <div class='tool-button' class='file-input-container'> 
                     <p>Add Grid</p>
-                    <input id='load-grid-button' class='file-input-button'  type='file'></input>
+                    <input id='load-grid-button' class='file-input-button' type='file'></input>
                 </div>
 
                 <button id='render-button' class='tool-button'>
