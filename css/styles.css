@@ -7,6 +7,12 @@ html, body
     /*overflow: hidden;*/
 }
 
+/* Github page + skeleton compatibility*/
+html
+{   font-size:100%;
+}    
+
+
 .container > p
 {  
     font-size: 1.6rem;
