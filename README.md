@@ -52,14 +52,6 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
     <body onload='init();'>
 
         <div class='container'>
-                <h1 class='title' style='margin-top:1em;'>TopoSketch Demo</h1>
-                <!--<h5 class='subtitle' style='margin-top:-0.2em;line-height:1.3em;'>Generating Animations by Sketching in Conceptual Space</h5>-->
-                <p>
-                TopoSketch is a tool for prototyping facial animations by sketching gestures. Posing and animating a believable face is a complex process, requiring many different features to work in tandem (eg: the eyes narrowing during a smile). Using neural networks, TopoSketch creates a high level expression based control that simplies this process. Drawn gestures are then used to control the blending and timing between different expressions to create an animation. 
-                </p>
-
-                <p><a href='https://vusd.github.io/toposketch' target='_blank'>vusd.github.io/toposketch</a> </p>
-
                 <div class='twelve columns toolbar' style="background-color:none;">
                
                 <button title='Load previous grid' onclick='animation.data.prev_grid();' class='tool-button'>
