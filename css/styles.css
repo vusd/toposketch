@@ -11,8 +11,8 @@ html, body
 {  
     font-size: 1.6rem;
     color:#333;
-    margin-left:16px;
-    margin-right:16px;
+    /*margin-left:16px;
+    margin-right:16px;*/
 }
 
 .title
