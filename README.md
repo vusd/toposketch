@@ -80,7 +80,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
                 <div class='tool-button file-input-container'>
                     <p>Load Path</p>
                     <input id='load-json-button' class='file-input-button' type='file'>
-                    </input>
+                
                 </div>
 
                 <button id='clear-button' class='tool-button' onclick="animation.data.clear()">
@@ -89,7 +89,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 
                 <div class='tool-button' class='file-input-container'> 
                     <p>Add Grid</p>
-                    <input id='load-grid-button' class='file-input-button' type='file'></input>
+                    <input id='load-grid-button' class='file-input-button' type='file'>
                 </div>
 
                 <button id='render-button' class='tool-button'>
