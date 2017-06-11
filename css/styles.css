@@ -1,0 +1,325 @@
+html, body
+{   width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Open Sans', sans-serif;
+    /*overflow: hidden;*/
+}
+
+.container > p
+{  
+    font-size: 1.6rem;
+    color:#333;
+    margin-left:16px;
+    margin-right:16px;
+}
+
+.title
+{
+    font-weight: bold;
+    margin-left:16px;
+    margin-right:16px;
+}
+
+.subtitle
+{
+    font-weight:bold;
+    margin-left:16px;
+    margin-right:16px;
+}
+
+#anim-windows
+{   position: relative;
+    width: 100%;
+    height: auto;
+    top:0px;
+    left:0px;
+}
+
+.toolbar
+{
+    padding: 6px 0px 6px 0px;
+    margin:0px;
+    height:auto;
+}
+
+.tool-button
+{
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+
+    float:left;
+    cursor: pointer;
+    background-color: rgba(255,255,255,255);
+    border-radius: 3px;
+    
+    padding: 0px 0px 0px 0px; 
+    margin:0px 3px 0px 3px;
+
+    height:36px;
+    min-height:36px;
+    max-height:36px;
+    min-width: 36px;
+
+    text-align: center;
+    border: 1px solid #DDD;
+    opacity:0.75;
+    /*padding: 15px 3px 3px 6px;*/
+    
+    color:black;
+    text-decoration: none;
+
+    position:relative;
+    top:0px;
+    left:0px;
+}
+
+.tool-button p
+{
+    position:relative;
+    padding:6px 6px 0px 6px;
+    top: 0px;
+}
+
+.tool-button:hover
+{
+    background-color: #F3F3F3;
+    border: 1px solid #D3D3D3;
+    opacity:0.90;
+}
+
+.tool-button:active
+{   border: 1px solid #FFF;
+    box-shadow: inset 0px 2px 4px grey;
+}
+
+.tool-button:focus
+{
+    outline:none;
+}
+
+.tool-button img
+{
+    width: 24px;
+    position:relative;
+    top: 3px;
+}
+
+#render-button
+{   padding:0px 12px 0px 12px;
+    float:right;
+}
+
+.file-input-container
+{
+    max-width: 100px;
+    overflow: hidden;
+}
+
+.file-input-button
+{   height:36px;
+    max-width: 200px;
+    background-color:red;
+    opacity: 0.0;
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
+/*  Timeline styling
+    Adapted from http://brennaobrien.com/blog/2014/05/style-input-type-range-in-every-browser.html
+*/
+
+#play-button-container
+{
+    padding-right:3px;
+    float:left;
+}
+
+#play-button
+{
+    min-width:36px;
+}
+
+#timeline-callout
+{
+    padding: 6px;
+    background-color:yellow;
+    border-radius: 3px;
+    position: relative;
+    top:0px;
+    left:0px;
+    display: inline-block;
+}
+
+#timeline-container
+{   width:auto;
+    height:38px;
+    background-color:none;
+    float:left;
+    padding:0px;
+    margin:0px;
+    background-color: #D3D3D3;/*rgb(200,0,0);*/
+    border-radius: 3px;
+    position:relative;
+    top:0px;
+    left:0px;
+}
+
+#timeline-container:hover
+{/*
+    -webkit-transition: background-color 0.4s;
+    transition: background-color 0.4s;
+    background-color:red;*/
+}
+
+#timeline-counter
+{
+    position:absolute;
+    top:6px;
+    left:12px;
+    pointer-events: none; /*This allows pointer events to pass to the timeline underneath*/
+}
+
+#timeline
+{   -webkit-appearance: none;
+    -moz-appearance: none;
+    margin:0px;
+    width: 100%;
+    height:38px;
+    /*width: calc(100% - 80px);*/
+}
+
+#timeline::-webkit-slider-runnable-track
+{   width: 100%;
+    background-color: rgba(255,0,0,0);
+    background-color: #D3D3D3;
+    border-radius: 3px;
+    padding-top:6px;
+    padding-left:6px;
+    padding-right:6px;
+    height:36px;
+}
+
+#timeline::-moz-range-track
+{   width: 100%;
+    background-color: rgba(255,0,0,0);
+    border: none;
+    height:36px;
+}
+
+#timeline::-webkit-slider-thumb 
+{   -webkit-appearance: none;
+    border: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: white;
+    margin-top: 2px;
+}
+
+#timeline::-moz-range-thumb 
+{   -webkit-appearance: none;
+    border: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: white;
+}
+
+#timeline::-ms-thumb 
+{   -webkit-appearance: none;
+    border: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: white;
+    margin-top: 2px;
+}
+
+#timeline:focus 
+{   outline: none;
+}
+
+.render_result_container
+{
+    background-color:none;
+    height:auto;
+    position:relative;
+    top:0px;
+    left:0px;
+}
+
+.render_result_image
+{
+    width:100%;
+    float:left;
+}
+
+.render_result_path
+{   -webkit-transition: opacity 0.4s;
+    transition: opacity 0.4s;
+    position:absolute;
+    top:0px;
+    left:0px;
+    float:left;
+    width:100%;
+    opacity: 0;
+}
+
+.render_result_path:hover
+{   -webkit-transition: opacity 0.4s;
+    transition: opacity 0.4s;
+    opacity: 0.75;
+}
+
+
+/*
+#anim-grid
+{   position: relative;
+    background-color: grey;
+    cursor: cell;
+}
+
+#anim-display
+{   position: absolute;
+    background-color: cyan;
+}
+/*
+
+#fps
+{   font-family: Arial, Helvetica, sans-serif;
+}
+
+.no-space
+{   padding: 0px;
+    margin: 0px;
+}
+
+#timeline
+
+{   margin-top:15px;
+    display: block;
+}
+
+.readout
+{   margin-left: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.button
+{   float: left;
+    margin: 10px;
+    padding: 5px;
+}*/
+
+/*.wide
+{   width: 100%;
+    display: inline-block;
+    background-color:red;
+}*/
+
