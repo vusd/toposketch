@@ -6,7 +6,8 @@ html
 
 .project-name
 {
-  font-weight:bolder;
+   font-weight:bolder;
+   margin-bottom: 0.2rem;
 }
 
 .project-tagline
