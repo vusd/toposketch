@@ -1,4 +1,4 @@
-<div class="video-container">ss
+<div class="video-container">
     <iframe src="https://www.youtube.com/embed/lNjXbKNhtGA?ecver=1" frameborder="0" allowfullscreen></iframe>
 </div>
 
