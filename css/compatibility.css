@@ -34,7 +34,7 @@ html
 	height: 0;
 	overflow: hidden;
 	width:80%;
-	margin: 0 auto;
+	padding-left:10%;
 }
 
 .video-container iframe,  
