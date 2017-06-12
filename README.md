@@ -38,7 +38,7 @@ TopoSketch is a tool for prototyping facial animations by sketching gestures. Po
 
     <body onload='init();'>
 
-        <div class='container'>
+        
                 <div class='twelve columns toolbar' style="background-color:none;">
                
                 <button title='Load previous grid' onclick='animation.data.prev_grid();' class='tool-button'>
@@ -93,7 +93,7 @@ TopoSketch is a tool for prototyping facial animations by sketching gestures. Po
                 </div>
             </div> 
 
-            <h4 class='title' style='margin-top:1em;'>Rendered Animations</h4>
+            <h2 class='title' style='margin-top:1em;'>Rendered Animations</h2>
             <p id='no-animations-sign'>No animations yet, render something!</p>
             <div id='render-container' class='twelve columns'>
                 <!--<div id='placement-guide'></div> renders will be placed before to this element-->
@@ -103,6 +103,6 @@ TopoSketch is a tool for prototyping facial animations by sketching gestures. Po
                 <p id='fps' class='readout'></p>
             </div> 
 
-        </div>
+        
     </body>
 </html>
