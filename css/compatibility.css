@@ -8,6 +8,12 @@ html
   font-weight:bolder;
 }
 
+.project-tagline
+{
+  font-weight:bolder;
+  letter-spacing:0rem;
+}
+
 h1
 {   font-size:3rem;
 }
@@ -19,3 +25,8 @@ h2
 h3
 {   font-size:1.5rem;
 }
+
+h4
+{   font-size:1.2rem;
+}
+
