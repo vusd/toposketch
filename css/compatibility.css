@@ -16,6 +16,11 @@ html
   letter-spacing:0rem;
 }
 
+.page-header
+{
+    background-image:none;
+}
+
 .page-header .btn
 {    font-size:1rem;
 }
