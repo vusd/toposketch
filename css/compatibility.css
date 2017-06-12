@@ -7,3 +7,8 @@ h1
 {
   font-size:1rem;
 }
+
+@media (min-width: 550px)
+h1 {
+    font-size: 1rem;
+}
