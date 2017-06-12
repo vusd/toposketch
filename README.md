@@ -1,5 +1,5 @@
 <p style="text-align: center;">
-<iframe src="https://drive.google.com/file/d/0B1UoLxmyYQA1ZHA3ZW5iR09sRTA/preview" style="width:100%;"></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lNjXbKNhtGA?ecver=1" frameborder="0" allowfullscreen></iframe>
 </p>
 
 ## Abstract
@@ -7,7 +7,7 @@ TopoSketch is a tool for prototyping facial animations by sketching gestures. Po
 
 ## Demo
 <html>
-    
+
     <head>
         <meta charset='utf-8'/>
         <title>TopoSketch Web App</title>
