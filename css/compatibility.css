@@ -5,11 +5,11 @@ html
 
 h1
 {
-  font-size:1rem;
+  font-size:3rem;
 }
 
 @media (min-width: 550px)
 h1 
 {
-    font-size: 3rem;
+    font-size: 2rem;
 }
