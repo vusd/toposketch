@@ -12,8 +12,12 @@ html
 
 .project-tagline
 {
-  font-weight:bolder;
+  font-weight:bold;
   letter-spacing:0rem;
+}
+
+.page-header .btn
+{    font-size:1rem;
 }
 
 /* From http://webdesignerwall.com/tutorials/css-elastic-videos*/
