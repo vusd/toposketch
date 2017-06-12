@@ -32,6 +32,7 @@ html
 	padding-top: 30px;
 	height: 0;
 	overflow: hidden;
+	width:80%;
 }
 
 .video-container iframe,  
