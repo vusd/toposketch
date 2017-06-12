@@ -1,8 +1,5 @@
 <p style="text-align: center;">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/lNjXbKNhtGA?ecver=1" frameborder="0" allowfullscreen></iframe>
-
-<iframe width="100%" height="auto" src="https://www.youtube.com/embed/lNjXbKNhtGA?ecver=1" frameborder="0" allowfullscreen></iframe>
-</p>
+<iframe id="video-demo" width="560" height="315" src="https://www.youtube.com/embed/lNjXbKNhtGA?ecver=1" frameborder="0" allowfullscreen></iframe></p>
 
 ## Abstract
 TopoSketch is a tool for prototyping facial animations by sketching gestures. Posing and animating a believable face is a complex process, requiring many different features to work in tandem (eg: the eyes narrowing during a smile). Using neural networks, TopoSketch creates a high level expression based control that simplies this process. Drawn gestures are then used to control the blending and timing between different expressions to create an animation. 
