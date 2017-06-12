@@ -1,8 +1,5 @@
 <p style="text-align: center;">
-<iframe class="video-demo" width="560" height="315" src="https://www.youtube.com/embed/lNjXbKNhtGA?ecver=1" frameborder="0" allowfullscreen></iframe>
-
 <iframe class="video-demo" src="https://www.youtube.com/embed/lNjXbKNhtGA?ecver=1" frameborder="0" allowfullscreen></iframe>
-
 </p>
 
 ## Abstract
