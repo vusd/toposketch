@@ -9,6 +9,7 @@ h1
 }
 
 @media (min-width: 550px)
-h1 {
-    font-size: 1rem;
+h1 
+{
+    font-size: 3rem;
 }
