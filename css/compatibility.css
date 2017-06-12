@@ -3,13 +3,19 @@ html
 {   font-size:100%;
 }    
 
-h1
+.project-name
 {
-  font-size:3rem;
+  font-weight:bolder;
 }
 
-@media (min-width: 550px)
-h1 
-{
-    font-size: 2rem;
+h1
+{   font-size:3rem;
+}
+
+h2
+{   font-size:2rem;
+}
+
+h3
+{   font-size:1.5rem;
 }
