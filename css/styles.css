@@ -11,22 +11,22 @@ html, body
 {  
     font-size: 1.6rem;
     color:#333;
-    /*margin-left:16px;
-    margin-right:16px;*/
+    margin-left:16px;
+    margin-right:16px;
 }
 
 .title
 {
     font-weight: bold;
-    /*margin-left:16px;
-    margin-right:16px;*/
+    margin-left:16px;
+    margin-right:16px;
 }
 
 .subtitle
 {
     font-weight:bold;
-    /*margin-left:16px;
-    margin-right:16px;*/
+    margin-left:16px;
+    margin-right:16px;
 }
 
 #anim-windows
@@ -114,8 +114,8 @@ html, body
 
 .file-input-container
 {
-    max-width: 100px;
     overflow: hidden;
+    position:relative;
 }
 
 .file-input-button
@@ -243,83 +243,149 @@ html, body
 {   outline: none;
 }
 
-.render_result_container
-{
-    background-color:none;
-    height:auto;
+/* Render Container
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.render-result-container
+{   height:auto;
     position:relative;
     top:0px;
-    left:0px;
-}
+    right:0px;}
 
-.render_result_image
-{
-    width:100%;
-    float:left;
-}
+.render-result-path
+{   float:left;
+    width:100%;}
 
-.render_result_path
+.render-result-animation
 {   -webkit-transition: opacity 0.4s;
     transition: opacity 0.4s;
     position:absolute;
     top:0px;
     left:0px;
-    float:left;
     width:100%;
-    opacity: 0;
-}
+    opacity: 1;}
 
-.render_result_path:hover
+.render-result-container:hover .render-result-animation
 {   -webkit-transition: opacity 0.4s;
     transition: opacity 0.4s;
+    opacity: 0.25;}
+
+.render-popout-button
+{   position:absolute;
+    top:initial;
+    left:initial;
+    right:0px;
+    margin-top:6px;
+    margin-right:6px;
+    border:none;
+    -webkit-transition: opacity 0.2s;
+    transition: opacity 0.2s;
+    opacity: 0.15;}
+
+.render-popout-button:hover
+{   -webkit-transition: opacity 0.2s;
+    transition: opacity 0.2s;
     opacity: 0.75;
+    border:none;}
+
+.render-download-button
+{   position:absolute;
+    top:initial;
+    left:initial;
+    right:0px;
+    margin-top:6px;
+    margin-right:48px;
+    border:none;
+    -webkit-transition: opacity 0.2s;
+    transition: opacity 0.2s;
+    visibility: hidden;
+    opacity: 0.25;
 }
 
+.render-download-button:hover
+{   border:none;
+    opacity: 0.75;}
 
-/*
-#anim-grid
-{   position: relative;
-    background-color: grey;
-    cursor: cell;
-}
+.render-popout-button:hover
+{   -webkit-transition: opacity 0.2s;
+    transition: opacity 0.2s;
+    opacity: 0.75;
+    border:none;}
 
-#anim-display
-{   position: absolute;
-    background-color: cyan;
-}
-/*
+.render-result-container:hover .render-download-button
+{   -webkit-transition: opacity 0.4s;
+    transition: opacity 0.4s;
+    visibility: visible;}
 
-#fps
-{   font-family: Arial, Helvetica, sans-serif;
-}
+/* Dropdown Options
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-.no-space
-{   padding: 0px;
-    margin: 0px;
-}
-
-#timeline
-
-{   margin-top:15px;
-    display: block;
-}
-
-.readout
-{   margin-left: 10px;
-    margin-bottom: 10px;
+#dropdown
+{   float:right;
+    position:relative;
     display: inline-block;
-    font-family: Arial, Helvetica, sans-serif;
 }
 
-.button
-{   float: left;
-    margin: 10px;
-    padding: 5px;
-}*/
+#dropdown:hover #dropdown-list
+{   display: block;
+}
 
-/*.wide
-{   width: 100%;
-    display: inline-block;
-    background-color:red;
-}*/
+#dropdown-list
+{   position:absolute;
+    z-index: 1;
+    top:0px;
+    right:3px;
+    width:200px;
+    height:auto;
+    display: none;
+    padding:0px;
+    margin:0px;
 
+    background-color: rgba(255,255,255,255);
+    border-radius: 3px;
+    border: 1px solid #DDD;
+
+    box-shadow: 0px 3px 6px rgba(0,0,0,0.25);
+
+    overflow:hidden;
+}
+
+#dropdown-list a
+{   margin:0px;
+    color:black;
+    width:100%;
+    text-decoration: none;
+}
+
+.dropdown-button
+{
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+
+    min-height: 36px;
+    width:100%;
+    margin:0px;
+    text-decoration: none;
+
+    opacity:0.75;
+
+    text-align: center;
+
+    background-color: rgba(255,255,255,255);
+    border: none;
+}
+
+.dropdown-button p
+{
+    position:relative;
+    padding:6px 6px 0px 6px;
+    top: 0px;
+    margin:0px;
+}
+
+.dropdown-button:hover
+{
+    background-color: #F3F3F3;
+    opacity:0.90;
+}
