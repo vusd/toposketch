@@ -151,7 +151,7 @@ function SaveJsonButton()
     SaveJsonButton.prototype.append_json = function()
     {   // Get current json data from Animation.data and append it to link element
         // Adapted from: http://stackoverflow.com/questions/19721439/download-json-object-as-a-file-from-browser
-        let json = animation.get_json();
+        let json = animation.data.get_json();
         var data = "text/json;charset=utf-8," + encodeURIComponent(json);
         element.href = 'data:' + data;
     }
@@ -171,7 +171,7 @@ function LoadJsonButton()
 
     this.on_change = function(e)
     {   // From: https://developer.mozilla.org/en/docs/Using_files_from_web_applications
-        animation.load_json(e.target.files);
+        animation.data.load_path(e.target.files);
     }
 
     LoadJsonButton.prototype.setup = function ()

@@ -84,6 +84,13 @@ function Grid()
                 context.lineTo(path[p+1].x*canvas.width, path[p+1].y*canvas.height);
                 context.stroke(); 
                 context.closePath();
+
+                context.fillStyle = 'rgb(100,0,0)';
+                context.beginPath();
+                context.arc(path[p].x * canvas.width, 
+                            path[p].y * canvas.height, 
+                            1, 0, Math.PI * 2, true); 
+                context.fill();
             } 
 
             //context.stroke(); 

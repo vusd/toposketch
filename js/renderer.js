@@ -226,27 +226,62 @@ function Renderer()
         return data_url;
     }
 
-    Renderer.prototype.show_render = function(binary_gif)
+    Renderer.prototype.show_render = function(binary)
     {   // Add path and rendered animation to a container and append to web page
-        render_output = 'data:image/gif;base64,'+encode64(binary_gif);
+        // Render Data
+        // let render_output = 'data:image/gif;base64,'+encode64(binary); // Old method
+        
+        // Convert b64 to blob for speed
+        var blob = b64toBlob(encode64(binary),'image/gif');
+        var animation_image = URL.createObjectURL(blob);
+        let path_image = this.render_path_image();
 
+        // Container + images
         let container = document.createElement('div'); // Container for render
         let animation = document.createElement('img'); // Animated image
         let path = document.createElement('img'); // Path overlay
-
-        let path_image = this.render_path_image();
-        animation.src = render_output;
+        animation.src = animation_image;
         path.src = path_image;
+
+        // Container Buttons
+        let popout = document.createElement('button'); // Open in new window 
+        let download = document.createElement('button'); // Download
+        let download_link = document.createElement('a'); // Download Link
+        let popout_image = document.createElement('img');
+        let download_image = document.createElement('img');
+        popout_image.src = './imgs/icons/ic_open_in_new_black_24px.svg';
+        download_image.src = './imgs/icons/ic_file_download_black_24px.svg';
+
+        // Setup popout https://stackoverflow.com/questions/27798126/how-to-open-the-newly-created-image-in-a-new-tab
+        popout.onclick = function()
+        {   
+            let external_window = window.open('');
+            external_window.document.write(animation.outerHTML);
+        }
+        // Append download info
+        download_link.href=animation.src;
+        download_link.target='_blank';
+        download_link.download = 'animation.gif';
 
         container.classList.add('three');
         container.classList.add('columns');
-        container.classList.add('render_result_container');
-        animation.classList.add('render_result_image');
-        path.classList.add('render_result_path');
+        container.classList.add('render-result-container');
+        animation.classList.add('render-result-animation');
+        path.classList.add('render-result-path');
+        popout.classList.add('tool-button');
+        popout.classList.add('render-popout-button');
+        download.classList.add('tool-button');
+        download.classList.add('render-download-button')
 
-        container.appendChild(animation);
+        //link.appendChild(container);
         container.appendChild(path);
-
+        container.appendChild(animation);
+        container.appendChild(popout);
+        popout.appendChild(popout_image);
+        download_link.appendChild(download);
+        container.appendChild(download_link);
+        download.appendChild(download_image);
+        
         document.getElementById('render-container').insertBefore(container,get_id('render-container').children[0]);
         
         get_id('no-animations-sign').style.display = 'none';

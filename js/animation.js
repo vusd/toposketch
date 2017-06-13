@@ -141,26 +141,6 @@ function Animation()
         }
     }
 
-    // JSON
-    Animation.prototype.load_json = function(files)
-    {
-        // This will run when json is loaded
-        let on_load_json_callback = function(json)
-        {
-            try
-            {   animation.data.load_json(json);}
-            catch(exception)
-            {}
-        }
-
-        // Load the first file from the file list
-        this.json_reader.read_json(files[0],on_load_json_callback);
-    }
-
-    Animation.prototype.get_json = function()
-    {   return this.data.get_json();
-    }
-
 }
 
 function AnimData()
@@ -168,10 +148,15 @@ function AnimData()
     this.path = new Array();
     // Image Data
     this.image_list = new Array(); // Array of Images
+    this.path_list = new Array(); // Array of canned paths
+    this.drawn_path = new Array(); // Path that is drawn by player
+
     this.current_grid_index = 0;
+    this.current_path_index = 0;
     this.image = null;
     this.image_shape = [1, 1]; // Default value 
-
+    var anim_data = this;
+    
     // Data Properties
     Object.defineProperty(this, 'size',
     {   get: function(){return this.path.length;}
@@ -196,16 +181,55 @@ function AnimData()
         return JSON.stringify(json_output);
     }
 
-    AnimData.prototype.load_json = function(json)
-    {   // Load path from json file
-        animation.stop();
-        timeline.update_length();
-        let points = json.points;
-        this.clear();    
-        for(var p=0; p<points.length; p++)
+    // Loads JSON path from local directory
+    AnimData.prototype.load_local_path = function(path, callback)
+    {   // From https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Synchronous_and_Asynchronous_Requests
+         let request = new XMLHttpRequest();
+         request.open("GET", path, true);
+         request.onload = function (e)
+         {
+             if(request.readyState===4)
+             {   if(request.status===200)
+                 {   let read_json = JSON.parse(request.responseText);
+                     anim_data.add_path(read_json);
+                     if(callback)
+                     {  callback();}
+                 }
+             }
+         }
+         request.send(null)
+         //var my_JSON_object = JSON.parse(request.responseText);
+         //alert (my_JSON_object.result);
+    }
+
+    // Loads JSON path file from user selected file object
+    AnimData.prototype.load_path = function(files)
+    {
+        // This will run when json is loaded
+        let on_load_json_callback = function(json)
         {
-            this.add_point(points[p][0],points[p][1]);
+            try
+            {   anim_data.add_path(json);
+                anim_data.set_path(anim_data.path_list.length-1);
+            }
+            catch(exception)
+            {}
         }
+        // Load the first file from the file list
+        animation.json_reader.read_json(files[0],on_load_json_callback);
+    }
+
+    // Adds JSON data object as a path
+    AnimData.prototype.add_path = function(json)
+    {   // Load path from json file
+        let new_path = new Array();
+        let points = json.points;
+
+        //this.clear();    
+        for(var p=0; p<points.length; p++)
+        {   new_path.push(new Point(points[p][0],points[p][1]));
+        }
+        this.path_list.push(new_path);
     }
 
     // Point operations
@@ -217,6 +241,7 @@ function AnimData()
     AnimData.prototype.clear = function()
     {   // Resets this.path
         this.path = new Array();
+        play_button.update_state();
     }
 
     AnimData.prototype.add_grid_image = function(src, rows, cols)
@@ -259,6 +284,36 @@ function AnimData()
             this.image = image_data.image;
             this.image_shape = image_data.shape;    
             this.current_grid_index = index;   
+        }
+        else return; 
+    }
+
+    AnimData.prototype.next_path = function()
+    {
+        this.set_path((this.current_path_index+1)%this.path_list.length);
+    }
+
+    AnimData.prototype.prev_path = function()
+    {
+        let new_index = this.current_path_index-1 < 0 ? this.path_list.length-1: this.current_path_index-1;
+        this.set_path(new_index);
+    }
+
+    AnimData.prototype.set_path = function(index)
+    {   // Sets the grid
+        if(index < this.path_list.length)
+        {
+            let was_playing = animation.is_playing();
+            animation.stop();
+            play_button.update_state();   
+
+            timeline.update_length();
+            this.path = this.path_list[index];  
+            this.current_path_index = index;
+
+            if(was_playing)
+            {   animation.play();
+            }
         }
         else return; 
     }

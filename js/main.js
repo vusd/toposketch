@@ -16,12 +16,7 @@ var first_loop = true;
 function init()
 {
     animation = new Animation();
-    
-    animation.data.add_grid_image('./imgs/OpenSmile1.png', 7, 7);
-    animation.data.add_grid_image('./imgs/OpenSmile2.png', 7, 7);
-    animation.data.add_grid_image('./imgs/PaleDisgust.png', 7, 7);
-    animation.data.set_grid(0);
-    
+
     grid = new Grid();
     display = new Display();
     renderer = new Renderer();
@@ -30,6 +25,22 @@ function init()
     setup_ui();
     register_events(); // Window level events
 
+    animation.data.add_grid_image('./imgs/OpenSmile1.png', 7, 7);
+    animation.data.add_grid_image('./imgs/OpenSmile2.png', 7, 7);
+    animation.data.add_grid_image('./imgs/PaleDisgust.png', 7, 7);
+    animation.data.set_grid(0);
+
+    let paths_loaded = function()
+    {   // Since JSON files are loaded asynchronously, there is a callback to follow up on the loaded path
+        animation.data.set_path(0);
+    }
+
+    animation.data.load_local_path('./sample_paths/range_4_corners.json', null);
+    animation.data.load_local_path('./sample_paths/KissSmile.json', null); 
+    animation.data.load_local_path('./sample_paths/closedsmile_to_opensmile.json', null);   
+    animation.data.load_local_path('./sample_paths/Kiss.json', paths_loaded); 
+    
+    animation.play();
     start_loop(loop);
 }
 
