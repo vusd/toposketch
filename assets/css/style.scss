@@ -7,3 +7,7 @@
     /*background-color: red;*/
     /*background-image: none;*/
 }
+
+.main-content :first-child
+{   margin-top:inherit;
+}
