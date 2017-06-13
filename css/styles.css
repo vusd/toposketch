@@ -250,7 +250,8 @@ html, body
 {   height:auto;
     position:relative;
     top:0px;
-    right:0px;}
+    right:0px;
+    margin-bottom:50px;}
 
 .render-result-path
 {   float:left;
