@@ -65,3 +65,6 @@ h2, h3, h4, h5, h6
 {   font-size:2rem;
 }
 
+.render-download-button
+{   margin-top:6px;
+}
