@@ -1,7 +1,7 @@
 <html>
     <head>
         <meta charset='utf-8'/>
-        <title>TopoSketch Web App</title>
+        <!--<title>TopoSketch Web App</title>-->
         
         <script type="text/javascript" src="./js/jsgif/LZWEncoder.js"></script>
         <script type="text/javascript" src="./js/jsgif/NeuQuant.js"></script>
@@ -35,7 +35,7 @@
                 TopoSketch is a tool for prototyping facial animations by sketching gestures. Posing and animating a believable face is a complex process, requiring many different features to work in tandem (eg: the eyes narrowing during a smile). Using neural networks, TopoSketch creates a high level expression based control that simplies this process. Drawn gestures are then used to control the blending and timing between different expressions to create an animation. 
                 </p>-->
 
-                <p><a href='https://vusd.github.io/toposketch' target='_blank'>vusd.github.io/toposketch</a> </p>
+                <!--<p><a href='https://vusd.github.io/toposketch' target='_blank'>vusd.github.io/toposketch</a> </p>-->
 
                 <div class='twelve columns toolbar' style="background-color:none;">
                
