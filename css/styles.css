@@ -7,26 +7,43 @@ html, body
     /*overflow: hidden;*/
 }
 
-.container > p
+.container
+{
+    padding-left:16px;
+    padding-right:16px;
+}
+
+.container p
 {  
     font-size: 1.6rem;
-    color:#333;
-    margin-left:16px;
-    margin-right:16px;
+    color:#555;
 }
 
 .title
-{
+{   font-size:5.5rem;
     font-weight: bold;
-    margin-left:16px;
-    margin-right:16px;
+    color:#333;
 }
 
 .subtitle
-{
+{   color:#333;
+}
+
+.header
+{   margin-top:7rem;
+    margin-bottom:7rem;
+    height:100%;
+}
+
+.header a
+{   color:black;
     font-weight:bold;
-    margin-left:16px;
-    margin-right:16px;
+}
+
+
+.footer
+{
+    height:100px;
 }
 
 #anim-windows
@@ -36,6 +53,9 @@ html, body
     top:0px;
     left:0px;
 }
+
+/* Toolbar
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 .toolbar
 {
@@ -128,8 +148,8 @@ html, body
     left:0px;
 }
 
-/*  Timeline styling
-    Adapted from http://brennaobrien.com/blog/2014/05/style-input-type-range-in-every-browser.html
+/* Timeline
+–––––––––––––––––––––––––––––––––––––––––––––––––– http://brennaobrien.com/blog/2014/05/style-input-type-range-in-every-browser.html
 */
 
 #play-button-container
@@ -246,12 +266,17 @@ html, body
 /* Render Container
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
+#render-container
+{
+    padding-top:15px;
+    padding-bottom:25px;
+}
+
 .render-result-container
 {   height:auto;
     position:relative;
     top:0px;
-    right:0px;
-    margin-bottom:50px;}
+    right:0px;}
 
 .render-result-path
 {   float:left;
@@ -281,13 +306,19 @@ html, body
     border:none;
     -webkit-transition: opacity 0.2s;
     transition: opacity 0.2s;
-    opacity: 0.15;}
+    visibility: hidden;
+    opacity: 0.25;}
 
 .render-popout-button:hover
 {   -webkit-transition: opacity 0.2s;
     transition: opacity 0.2s;
     opacity: 0.75;
     border:none;}
+
+.render-result-container:hover .render-popout-button
+{   -webkit-transition: opacity 0.4s;
+    transition: opacity 0.4s;
+    visibility: visible;}
 
 .render-download-button
 {   position:absolute;
@@ -306,12 +337,6 @@ html, body
 .render-download-button:hover
 {   border:none;
     opacity: 0.75;}
-
-.render-popout-button:hover
-{   -webkit-transition: opacity 0.2s;
-    transition: opacity 0.2s;
-    opacity: 0.75;
-    border:none;}
 
 .render-result-container:hover .render-download-button
 {   -webkit-transition: opacity 0.4s;
@@ -389,4 +414,30 @@ html, body
 {
     background-color: #F3F3F3;
     opacity:0.90;
+}
+
+/* Video Container*/
+/* From http://webdesignerwall.com/tutorials/css-elastic-videos*/
+.video-container {
+	position: relative;
+	/*padding-bottom: 56.25%;*/
+	padding-bottom: 45%;
+	padding-top: 30px;
+	height: 0;
+	overflow: hidden;
+	width:80%;
+	padding-left:0%;
+    left:10%;
+    margin-top:50px;
+    margin-bottom:50px;
+}
+
+.video-container iframe,  
+.video-container object,  
+.video-container embed {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
 }

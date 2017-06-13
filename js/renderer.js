@@ -284,8 +284,9 @@ function Renderer()
         
         document.getElementById('render-container').insertBefore(container,get_id('render-container').children[0]);
         
-        get_id('no-animations-sign').style.display = 'none';
-        
+        get_id('renders-header').style.display = 'initial';
+        get_id('render-container').style.display = 'initial';
+
         this.reset_render();
         this.update_status('Complete! Animation added to grid')
         render_button.reset_label_in(3000);

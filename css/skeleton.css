@@ -31,7 +31,8 @@
 .container {
   position: relative;
   width: 100%;
-  max-width: 960px;
+  /*max-width: 960px;*/
+  max-width: 860px;
   margin: 0 auto;
   padding: 0 20px;
   box-sizing: border-box; }
@@ -42,7 +43,7 @@
   box-sizing: border-box; 
   margin: 0px; 
   padding: 0px; }
-.render_result_container
+.render-result-container
 {
   width: 50%;
 }
