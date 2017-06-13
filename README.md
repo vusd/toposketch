@@ -21,7 +21,7 @@
         <link rel='stylesheet' href='./css/normalize.css'>
         <link rel='stylesheet' href='./css/skeleton.css'>
         <link rel='stylesheet' href='./css/styles.css'>
-        <!--<link rel='stylesheet' href='./css/compatibility.css'>-->
+        <link rel='stylesheet' href='./css/compatibility.css'>
 
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 
