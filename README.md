@@ -38,7 +38,6 @@ TopoSketch is a tool for prototyping facial animations by sketching gestures. Po
 
     <body onload='init();'>
 
-        <div class='container'>
                 <h1 class='title' style='margin-top:1em;'>TopoSketch Demo</h1>
                 <!--<h5 class='subtitle' style='margin-top:-0.2em;line-height:1.3em;'>Generating Animations by Sketching in Conceptual Space</h5>-->
                 <p>
@@ -128,6 +127,5 @@ TopoSketch is a tool for prototyping facial animations by sketching gestures. Po
                 <p id='fps' class='readout'></p>
             </div> 
 
-        </div>
     </body>
 </html>
