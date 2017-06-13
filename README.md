@@ -31,7 +31,7 @@
 
     <body onload='init();'>
 
-                <h1 class='title' style='margin-top:1em;'>TopoSketch Demo</h1>
+                <!--<h1 style='margin-top:1em;'>TopoSketch Demo</h1>-->
                 <!--<h5 class='subtitle' style='margin-top:-0.2em;line-height:1.3em;'>Generating Animations by Sketching in Conceptual Space</h5>-->
                 <p>
                 TopoSketch is a tool for prototyping facial animations by sketching gestures. Posing and animating a believable face is a complex process, requiring many different features to work in tandem (eg: the eyes narrowing during a smile). Using neural networks, TopoSketch creates a high level expression based control that simplies this process. Drawn gestures are then used to control the blending and timing between different expressions to create an animation. 
@@ -110,7 +110,7 @@
                 </div>
             </div> 
 
-            <h4 class='title' style='margin-top:1em;'>Rendered Animations</h4>
+            <h4 style='margin-top:1em;'>Rendered Animations</h4>
             <p id='no-animations-sign'>No animations yet, render something!</p>
             <div id='render-container' class='twelve columns'>
                 <!--<div id='placement-guide'></div> renders will be placed before to this element-->
