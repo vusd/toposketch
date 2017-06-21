@@ -25,8 +25,10 @@ function init()
     setup_ui();
     register_events(); // Window level events
 
+    animation.data.add_grid_image('./imgs/GanHair.jpg', 12, 12);
     animation.data.add_grid_image('./imgs/OpenSmile1.png', 7, 7);
-    animation.data.add_grid_image('./imgs/OpenSmile2.png', 7, 7);
+    animation.data.add_grid_image('./imgs/OldGlasses.jpg', 9, 9);
+    animation.data.add_grid_image('./imgs/OpenSmile2.jpg', 7, 7);
     animation.data.add_grid_image('./imgs/PaleDisgust.png', 7, 7);
     animation.data.set_grid(0);
 
