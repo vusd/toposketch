@@ -18,6 +18,38 @@
     </script>
     <!-- End Piwik Code -->
     
+    
+    <!-- Piwik A/B Test -->
+    <script type="text/javascript">
+        var _paq = _paq || [];
+        _paq.push(['AbTesting::create', {
+            name: 'RedRenderButton', // you can also use '1' (ID of the experiment) to hide the name
+            percentage: 50,
+            includedTargets: [{"attribute":"url","inverted":"0","type":"equals_simple","value":"https:\/\/vusd.github.io\/toposketch\/"}],
+            excludedTargets: [],
+            startDateTime: '2017/08/05 00:00:00 UTC',
+            endDateTime: '2017/08/31 23:59:59 UTC',
+            variations: [
+                {
+                    name: 'original',
+                    activate: function (event) {
+                        event.redirect('https://vusd.github.io/toposketch');
+                    }
+                },
+                {
+                    name: 'RedButton', // you can also use '1' (ID of the variation) to hide the name
+                    activate: function(event) {
+                        event.redirect('https://vusd.github.io/toposketch/redbutton.html');
+                    }
+                }            
+            ],
+            trigger: function () {
+                return true; // here you can further customize which of your visitors will participate in this experiment
+            }
+        }]);
+    </script>
+    <!-- Piwik A/B Test -->
+    
     <head>
         <meta charset='utf-8'/>
         <title>TopoSketch Web App</title>
