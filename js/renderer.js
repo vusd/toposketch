@@ -231,6 +231,9 @@ function Renderer()
         // Render Data
         // let render_output = 'data:image/gif;base64,'+encode64(binary); // Old method
         
+        // Push a Piwik event (test)
+        _paq.push(['trackEvent', 'render', 'finished', '']);
+        
         // Convert b64 to blob for speed
         var blob = b64toBlob(encode64(binary),'image/gif');
         var animation_image = URL.createObjectURL(blob);
