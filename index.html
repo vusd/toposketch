@@ -170,4 +170,43 @@
 
         </div>
     </body>
+            
+    <!-- Piwik A/B Test -->
+    <script type="text/javascript">
+        var _paq = _paq || [];
+        _paq.push(['AbTesting::create', {
+            name: 'Coloured_Render_Button', // you can also use '2' (ID of the experiment) to hide the name
+            percentage: 100,
+            includedTargets: [{"attribute":"url","inverted":"0","type":"equals_simple","value":"https:\/\/vusd.github.io\/toposketch"}],
+            excludedTargets: [],
+            variations: [
+                {
+                    name: 'original',
+                    activate: function (event) {
+                        // usually nothing needs to be done here
+                    }
+                },
+                {
+                    name: 'Red', // you can also use '2' (ID of the variation) to hide the name
+                    activate: function(event) {
+                        // eg $('#btn').attr('style', 'color: ' + this.name + ';');
+                        document.getElementById('render-button').style.backgroundColour = 'red';
+                        console.log('Showing Red button test');
+                    }
+                },                        {
+                    name: 'Blue', // you can also use '3' (ID of the variation) to hide the name
+                    activate: function(event) {
+                        // eg $('#btn').attr('style', 'color: ' + this.name + ';');
+                        document.getElementById('render-button').style.backgroundColour = 'cyan';
+                        console.log('Showing Blue button test');
+                    }
+                }            
+            ],
+            trigger: function () {
+                return true; // here you can further customize which of your visitors will participate in this experiment
+            }
+        }]);
+    </script>
+    <!-- Piwik A/B Test -->      
+            
 </html>
