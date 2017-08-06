@@ -182,20 +182,24 @@
             variations: [
                 {
                     name: 'original',
-                    activate: function (event) {
+                    activate: function (event) 
+                    {
                         // usually nothing needs to be done here
                     }
                 },
                 {
                     name: 'Red', // you can also use '2' (ID of the variation) to hide the name
-                    activate: function(event) {
+                    activate: function(event) 
+                    {
                         // eg $('#btn').attr('style', 'color: ' + this.name + ';');
                         document.getElementById('render-button').style.backgroundColor = 'red';
                         console.log('Showing Red button test');
                     }
-                },                        {
+                },                        
+                {
                     name: 'Blue', // you can also use '3' (ID of the variation) to hide the name
-                    activate: function(event) {
+                    activate: function(event) 
+                    {
                         // eg $('#btn').attr('style', 'color: ' + this.name + ';');
                         document.getElementById('render-button').style.backgroundColor = 'cyan';
                         console.log('Showing Blue button test');
