@@ -1,23 +1,6 @@
 <!DOCTYPE html>
 
 <html>
-    
-    <!-- Piwik -->
-    <script type="text/javascript"> 
-      var _paq = _paq || [];
-      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-      _paq.push(['trackPageView']);
-      _paq.push(['enableLinkTracking']);
-      (function() {
-        var u="//toposketch.innocraft.cloud/";
-        _paq.push(['setTrackerUrl', u+'piwik.php']);
-        _paq.push(['setSiteId', '1']);
-        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-      })();
-        
-    </script>
-    <!-- End Piwik Code -->
 
     <head>
         <meta charset='utf-8'/>
@@ -170,47 +153,5 @@
 
         </div>
     </body>
-            
-    <!-- Piwik A/B Test -->
-    <script type="text/javascript">
-        var _paq = _paq || [];
-        _paq.push(['AbTesting::create', {
-            name: 'Coloured_Render_Button', // you can also use '2' (ID of the experiment) to hide the name
-            percentage: 100,
-            includedTargets: [{"attribute":"url","inverted":"0","type":"equals_simple","value":"https:\/\/vusd.github.io\/toposketch"}],
-            excludedTargets: [],
-            variations: [
-                {
-                    name: 'original',
-                    activate: function (event) 
-                    {
-                        // usually nothing needs to be done here
-                    }
-                },
-                {
-                    name: 'Red', // you can also use '2' (ID of the variation) to hide the name
-                    activate: function(event) 
-                    {
-                        // eg $('#btn').attr('style', 'color: ' + this.name + ';');
-                        document.getElementById('render-button').style.backgroundColor = 'red';
-                        console.log('Showing Red button test');
-                    }
-                },                        
-                {
-                    name: 'Blue', // you can also use '3' (ID of the variation) to hide the name
-                    activate: function(event) 
-                    {
-                        // eg $('#btn').attr('style', 'color: ' + this.name + ';');
-                        document.getElementById('render-button').style.backgroundColor = 'cyan';
-                        console.log('Showing Blue button test');
-                    }
-                }            
-            ],
-            trigger: function () {
-                return true; // here you can further customize which of your visitors will participate in this experiment
-            }
-        }]);
-    </script>
-    <!-- Piwik A/B Test -->      
             
 </html>
