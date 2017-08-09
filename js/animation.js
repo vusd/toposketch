@@ -156,6 +156,9 @@ function AnimData()
     this.image = null;
     this.image_shape = [1, 1]; // Default value 
     var anim_data = this;
+
+    this.is_example_path = false; // Flag for checking if an example path is loaded
+    this.example_path_indices = new Array(); // Keep track of which indices in array contain example paths
     
     // Data Properties
     Object.defineProperty(this, 'size',
@@ -181,7 +184,8 @@ function AnimData()
         return JSON.stringify(json_output);
     }
 
-    // Loads JSON path from local directory
+    // Loads JSON path from local directory. 
+    // For now, paths loaded from local dirs are treated as example paths.
     AnimData.prototype.load_local_path = function(path, callback)
     {   // From https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Synchronous_and_Asynchronous_Requests
          let request = new XMLHttpRequest();
@@ -192,6 +196,8 @@ function AnimData()
              {   if(request.status===200)
                  {   let read_json = JSON.parse(request.responseText);
                      anim_data.add_path(read_json);
+                     anim_data.example_path_indices.push(anim_data.path_list.length-1);
+                     //console.log(anim_data.example_path_indices);
                      if(callback)
                      {  callback();}
                  }
@@ -236,12 +242,16 @@ function AnimData()
     AnimData.prototype.add_point = function(x, y)
     {   // Adds a Point object to this.path
         this.path.push(new Point(x,y));
+
+        if(this.is_example_path){this.is_example_path = false;}
     }
 
     AnimData.prototype.clear = function()
     {   // Resets this.path
         this.path = new Array();
         play_button.update_state();
+
+        if(this.is_example_path){this.is_example_path = false;}
     }
 
     AnimData.prototype.add_grid_image = function(src, rows, cols)
@@ -300,7 +310,7 @@ function AnimData()
     }
 
     AnimData.prototype.set_path = function(index)
-    {   // Sets the grid
+    {   // Sets the path
         if(index < this.path_list.length)
         {
             let was_playing = animation.is_playing();
@@ -310,6 +320,11 @@ function AnimData()
             timeline.update_length();
             this.path = this.path_list[index];  
             this.current_path_index = index;
+
+            if(this.example_path_indices.indexOf(index) != -1)
+            {   //console.log('Path ' + index + ' is an example path');
+                this.is_example_path = true;
+            }
 
             if(was_playing)
             {   animation.play();

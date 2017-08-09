@@ -35,12 +35,13 @@ function Grid()
 
     Grid.prototype.update = function()
     {   // All runtime stuff goes here
-        this.draw();
+        this.draw_background();
         this.draw_recording();
+        this.draw_overlay();
     }
 
     // Drawing
-    Grid.prototype.draw = function()
+    Grid.prototype.draw_background = function()
     {   // Draws background elements of the grid
         let alphas = 0.5;
         
@@ -55,7 +56,11 @@ function Grid()
         context.drawImage(animation.data.image, 0, 0, canvas.width, canvas.height); 
         context.globalAlpha = 1;
 
-        if(!mouse_over && animation.data.path.length == 0 || animation.data.path == null)
+    }
+
+    Grid.prototype.draw_overlay = function()
+    {
+        if(!mouse_over && animation.data.path.length == 0 || animation.data.path == null || animation.data.is_example_path)
         {   context.font = "1.6em Open Sans";
             context.fillStyle = "white";
             context.textAlign = "center";
