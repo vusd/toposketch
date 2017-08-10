@@ -148,7 +148,7 @@ function AnimData()
     this.path = new Array();
     // Image Data
     this.image_list = new Array(); // Array of Images
-    this.path_list = new Array(); // Array of canned paths
+    this.path_list = new Array(); // Array of loaded paths
     this.drawn_path = new Array(); // Path that is drawn by player
 
     this.current_grid_index = 0;

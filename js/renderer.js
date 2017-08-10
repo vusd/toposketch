@@ -12,6 +12,7 @@ function Renderer()
     this.render_length = 0; // In frames
     this.rendering = false;
     this.rendering_frame = 0;
+    this.rendering_start_time = 0;
 
     // Animation data
     this.animation_data = null; // Copy (not reference) of animation data
@@ -109,6 +110,7 @@ function Renderer()
         else if(this.animation_data.path.length > 0)
         {   this.rendering_frame = 0;
             this.rendering = true;
+            this.rendering_start_time = Date.now();
 
             if(this.render_worker != null)
             {   this.render_worker.postMessage(['start','']);
@@ -117,6 +119,7 @@ function Renderer()
             {   this.gif_encoder.start();
             }
 
+            log_toposketch_timestamp('Start', 'Render');
             this.update_status('Starting render...');
             this.render_frame(this.rendering_frame);   
         }
@@ -187,6 +190,9 @@ function Renderer()
             this.gif_encoder.finish();
             renderer.show_render(this.gif_encoder.stream().getData());
         }
+
+        log_toposketch_timestamp('Finish', 'Render');
+        log_toposketch_duration('Finish After', 'Render', Date.now()-this.rendering_start_time);
     }
 
     Renderer.prototype.render_path_image = function()
@@ -307,6 +313,9 @@ function Renderer()
         }
         this.reset_render();
         this.update_status('Render Animation');
+        
+        log_toposketch_timestamp('Cancel', 'Render');
+        log_toposketch_duration('Cancel After', 'Render', Date.now() - this.rendering_start_time);
     }
 
     Renderer.prototype.reset_render = function()

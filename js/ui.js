@@ -114,6 +114,15 @@ function PlayButton()
     this.on_click = function()
     {   animation.toggle_play();
         play_button.update_state();
+
+        if(animation.is_playing)
+        {
+            log_toposketch_timestamp('Play', 'Animation');
+        }
+        else
+        {
+            log_toposketch_timestamp('Stop', 'Animation');
+        }
     }
 
     PlayButton.prototype.update_state = function ()
@@ -138,19 +147,21 @@ function PlayButton()
 }
 
 function SaveJsonButton()
-{
+{   // Save Path
     var element = document.getElementById('save-json-button');
     var button = this;
 
     this.on_context_click = function(e)
     {
         button.append_json();
+        log_toposketch_timestamp('Save', 'Path');
     }
 
     this.on_click = function(e)
     {
         //console.log("Saving JSON");
         button.append_json();
+        log_toposketch_timestamp('Save As', 'Path');
     }
 
     SaveJsonButton.prototype.append_json = function()
@@ -170,13 +181,14 @@ function SaveJsonButton()
 }
 
 function LoadJsonButton()
-{
+{   // Load Path
     var element = document.getElementById('load-json-button');
     var button = this;
 
     this.on_change = function(e)
     {   // From: https://developer.mozilla.org/en/docs/Using_files_from_web_applications
         animation.data.load_path(e.target.files);
+        log_toposketch_timestamp('Load', 'Path');
     }
 
     LoadJsonButton.prototype.setup = function ()
@@ -193,6 +205,7 @@ function NextPathButton()
     element.onclick = function()
     {
         animation.data.next_path();
+        log_toposketch_timestamp('Next', 'Path');
     }
 }
 
@@ -202,6 +215,7 @@ function PrevPathButton()
     element.onclick = function()
     {
         animation.data.prev_path();
+        log_toposketch_timestamp('Prev', 'Path');
     }
 }
 
@@ -211,6 +225,7 @@ function ClearPathButton()
     element.onclick = function()
     {
         animation.data.clear();
+        log_toposketch_timestamp('Clear', 'Path');
     }
 }
 
@@ -220,6 +235,7 @@ function NextGridButton()
     element.onclick = function()
     {
         animation.data.next_grid();
+        log_toposketch_timestamp('Next', 'Grid');
     }
 }
 
@@ -229,6 +245,7 @@ function PrevGridButton()
     element.onclick = function()
     {
         animation.data.prev_grid();
+        log_toposketch_timestamp('Prev', 'Grid');
     }
 }
 
@@ -246,6 +263,7 @@ function LoadGridButton()
         file_reader.onload = function(e)
         {
             animation.data.add_grid_image(e.target.result, 7, 7);
+            log_toposketch_timestamp('Load', 'Grid');
         }
         
         file_reader.readAsDataURL(selected_file);
