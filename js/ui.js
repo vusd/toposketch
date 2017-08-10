@@ -15,6 +15,7 @@ function Timeline()
 {
     var element = document.getElementById('timeline');
     var frame_readout = document.getElementById('timeline-counter');
+    var scrubbing = false;
     
     // Timeline Data
     Object.defineProperty(this, 'value',
@@ -31,6 +32,15 @@ function Timeline()
     Timeline.prototype.setup = function()
     {   element.onchange = this.on_change;
         element.oninput = this.on_change;
+        element.onmouseup = this.on_up;
+    }
+
+    Timeline.prototype.on_up = function()
+    {
+        if(scrubbing)
+        {   scrubbing = false;
+            log_event('UI', 'Playback', 'Scrub');
+        }
     }
 
     Timeline.prototype.on_change = function()
@@ -38,6 +48,10 @@ function Timeline()
         animation.pause();
         play_button.update_state();
         //console.log(element.clientLeft + element.clientWidth);
+
+        if(!scrubbing)
+        {   scrubbing = true;
+        }
     }
 
     Timeline.prototype.update_length = function()
@@ -115,13 +129,13 @@ function PlayButton()
     {   animation.toggle_play();
         play_button.update_state();
 
-        if(animation.is_playing)
+        if(animation.is_playing())
         {
-            log_toposketch_timestamp('Play', 'Animation');
+            log_event('UI', 'Playback', 'Play');
         }
         else
         {
-            log_toposketch_timestamp('Stop', 'Animation');
+            log_event('UI', 'Playback', 'Pause');
         }
     }
 
@@ -154,14 +168,13 @@ function SaveJsonButton()
     this.on_context_click = function(e)
     {
         button.append_json();
-        log_toposketch_timestamp('Save', 'Path');
+        log_event('UI', 'Path', 'Save');
     }
 
     this.on_click = function(e)
     {
         //console.log("Saving JSON");
-        button.append_json();
-        log_toposketch_timestamp('Save As', 'Path');
+        //button.append_json(); // Allows "right click and save as" functionality
     }
 
     SaveJsonButton.prototype.append_json = function()
@@ -188,7 +201,6 @@ function LoadJsonButton()
     this.on_change = function(e)
     {   // From: https://developer.mozilla.org/en/docs/Using_files_from_web_applications
         animation.data.load_path(e.target.files);
-        log_toposketch_timestamp('Load', 'Path');
     }
 
     LoadJsonButton.prototype.setup = function ()
@@ -204,8 +216,8 @@ function NextPathButton()
     var element = document.getElementById('next-path-button');
     element.onclick = function()
     {
+        log_event('UI', 'Path', 'Next');
         animation.data.next_path();
-        log_toposketch_timestamp('Next', 'Path');
     }
 }
 
@@ -215,7 +227,7 @@ function PrevPathButton()
     element.onclick = function()
     {
         animation.data.prev_path();
-        log_toposketch_timestamp('Prev', 'Path');
+        log_event('UI', 'Path', 'Prev');
     }
 }
 
@@ -225,7 +237,7 @@ function ClearPathButton()
     element.onclick = function()
     {
         animation.data.clear();
-        log_toposketch_timestamp('Clear', 'Path');
+        log_event('UI', 'Path', 'Clear');
     }
 }
 
@@ -235,7 +247,7 @@ function NextGridButton()
     element.onclick = function()
     {
         animation.data.next_grid();
-        log_toposketch_timestamp('Next', 'Grid');
+        log_event('UI', 'Grid', 'Next');
     }
 }
 
@@ -245,7 +257,7 @@ function PrevGridButton()
     element.onclick = function()
     {
         animation.data.prev_grid();
-        log_toposketch_timestamp('Prev', 'Grid');
+        log_event('UI', 'Grid', 'Prev');
     }
 }
 
@@ -257,13 +269,13 @@ function LoadGridButton()
     this.on_change = function(e)
     {   // From: https://stackoverflow.com/questions/12368910/html-display-image-after-selecting-filename
         let selected_file = e.target.files[0];
-
+        
         let file_reader = new FileReader();
 
         file_reader.onload = function(e)
         {
-            animation.data.add_grid_image(e.target.result, 7, 7);
-            log_toposketch_timestamp('Load', 'Grid');
+            animation.data.add_grid_image(e.target.result, 7, 7, selected_file.name, true);
+            //console.log(selected_file.name);
         }
         
         file_reader.readAsDataURL(selected_file);

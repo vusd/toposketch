@@ -146,20 +146,30 @@ function Animation()
 function AnimData()
 {   // Handles all animation data
     this.path = new Array();
+    
     // Image Data
-    this.image_list = new Array(); // Array of Images
-    this.path_list = new Array(); // Array of loaded paths
-    this.drawn_path = new Array(); // Path that is drawn by player
-
+    this.image_list = new Array(); // Array of images (grid)
     this.current_grid_index = 0;
-    this.current_path_index = 0;
     this.image = null;
     this.image_shape = [1, 1]; // Default value 
+    
+    // Path Data
+    this.path_list = new Array(); // Array of loaded paths
+    this.drawn_path = new Array(); // Path that is drawn by player
+    this.current_path_index = 0;
+    
     var anim_data = this;
 
     this.is_example_path = false; // Flag for checking if an example path is loaded
     this.example_path_indices = new Array(); // Keep track of which indices in array contain example paths
     
+    // Logging & Session
+    this.image_session_started = false;
+    this.image_session_start_time = Date.now();
+
+    this.path_session_started = false;
+    this.path_session_start_time = Date.now();
+
     // Data Properties
     Object.defineProperty(this, 'size',
     {   get: function(){return this.path.length;}
@@ -195,7 +205,7 @@ function AnimData()
              if(request.readyState===4)
              {   if(request.status===200)
                  {   let read_json = JSON.parse(request.responseText);
-                     anim_data.add_path(read_json);
+                     anim_data.add_path(read_json, path);
                      anim_data.example_path_indices.push(anim_data.path_list.length-1);
                      //console.log(anim_data.example_path_indices);
                      if(callback)
@@ -212,21 +222,25 @@ function AnimData()
     AnimData.prototype.load_path = function(files)
     {
         // This will run when json is loaded
-        let on_load_json_callback = function(json)
+        let on_load_json_callback = function(json, file)
         {
             try
-            {   anim_data.add_path(json);
-                anim_data.set_path(anim_data.path_list.length-1);
+            {   
+                anim_data.add_path(json, file.name);
+                anim_data.set_path(anim_data.path_list.length-1, true);
+                log_event('UI', 'Path', 'Add Success', file.name);
             }
             catch(exception)
-            {}
+            {
+                log_event('UI', 'Path', 'Add Fail', file.name);
+            }
         }
         // Load the first file from the file list
         animation.json_reader.read_json(files[0],on_load_json_callback);
     }
 
     // Adds JSON data object as a path
-    AnimData.prototype.add_path = function(json)
+    AnimData.prototype.add_path = function(json, name)
     {   // Load path from json file
         let new_path = new Array();
         let points = json.points;
@@ -235,7 +249,8 @@ function AnimData()
         for(var p=0; p<points.length; p++)
         {   new_path.push(new Point(points[p][0],points[p][1]));
         }
-        this.path_list.push(new_path);
+        this.path_list.push([new_path, name]);
+        //console.log(name);
     }
 
     // Point operations
@@ -248,13 +263,20 @@ function AnimData()
 
     AnimData.prototype.clear = function()
     {   // Resets this.path
+        this.path_session_end();
+
         this.path = new Array();
         play_button.update_state();
 
         if(this.is_example_path){this.is_example_path = false;}
     }
 
-    AnimData.prototype.add_grid_image = function(src, rows, cols)
+    AnimData.prototype.add_local_grid_image = function(src, rows, cols)
+    {   // Adds a grid image to image_list
+        this.add_grid_image(src, rows, cols, src, false);
+    }
+
+    AnimData.prototype.add_grid_image = function(src, rows, cols, name, new_session)
     {   // Adds a grid image to image_list
         try
         {   let new_image_shape = [rows, cols];
@@ -265,11 +287,20 @@ function AnimData()
             image_data.image = new_image;
             image_data.shape = new_image_shape;
 
-            this.image_list.push(image_data);
-            this.set_grid(this.image_list.length-1);
+            this.image_list.push([image_data, name]);
+
+            this.set_grid(this.image_list.length-1, new_session);
+            if(new_session)
+            { 
+                log_event('UI', 'Grid', 'Add Success', name);        
+            }
         }
         catch(exception)
         {   console.log('Could not add grid image!');
+            if(new_session)
+            { 
+                log_event('UI', 'Grid', 'Add Fail', name);        
+            }
         }
         //console.log(image_data.shape);
         //console.log(this.image_list.indexOf(image_data));
@@ -277,48 +308,60 @@ function AnimData()
 
     AnimData.prototype.next_grid = function()
     {
-        this.set_grid((this.current_grid_index+1)%this.image_list.length);
+        this.set_grid((this.current_grid_index+1)%this.image_list.length, true);
     }
 
     AnimData.prototype.prev_grid = function()
     {
         let new_index = this.current_grid_index-1 < 0 ? this.image_list.length-1: this.current_grid_index-1;
-        this.set_grid(new_index);
+        this.set_grid(new_index, true);
     }
 
-    AnimData.prototype.set_grid = function(index)
+    AnimData.prototype.set_grid = function(index, new_session)
     {   // Sets the grid
         if(index < this.image_list.length)
-        {
-            let image_data = this.image_list[index]; 
+        {   
+            if(new_session)
+            {
+                this.image_session_start();
+            }
+
+            let image_data = this.image_list[index][0]; 
             this.image = image_data.image;
             this.image_shape = image_data.shape;    
             this.current_grid_index = index;   
+
+            //console.log(this.image_list[index][1]);
         }
         else return; 
     }
 
     AnimData.prototype.next_path = function()
     {
-        this.set_path((this.current_path_index+1)%this.path_list.length);
+        this.set_path((this.current_path_index+1)%this.path_list.length, true);
     }
 
     AnimData.prototype.prev_path = function()
     {
         let new_index = this.current_path_index-1 < 0 ? this.path_list.length-1: this.current_path_index-1;
-        this.set_path(new_index);
+        this.set_path(new_index, true);
     }
 
-    AnimData.prototype.set_path = function(index)
+    AnimData.prototype.set_path = function(index, new_session)
     {   // Sets the path
         if(index < this.path_list.length)
         {
+            if(new_session)
+            {
+                this.path_session_start();
+            }
+
             let was_playing = animation.is_playing();
             animation.stop();
             play_button.update_state();   
 
             timeline.update_length();
-            this.path = this.path_list[index];  
+            this.path = this.path_list[index][0];  
             this.current_path_index = index;
 
             if(this.example_path_indices.indexOf(index) != -1)
@@ -362,6 +405,72 @@ function AnimData()
             h: div_y,
         };
         return grid_position;
+    }
+
+    AnimData.prototype.current_image_name = function()
+    {   let result;
+        try
+        {
+            result = this.image_list[this.current_grid_index][1];
+            return result;
+        }
+        catch(exception)
+        {
+            return null;
+        }
+    }
+
+    AnimData.prototype.current_path_name = function()
+    {   let result;
+        try
+        {
+            result = this.path_list[this.current_path_index][1];
+            return result;
+        }
+        catch(exception)
+        {
+            return null;
+        }
+    }
+
+    // Logging
+    AnimData.prototype.path_session_start = function()
+    {
+        if(this.path_session_started)
+        {
+            this.path_session_end();
+        }
+        this.path_session_start_time = Date.now();
+        this.path_session_started = true;
+    }
+
+    AnimData.prototype.path_session_end = function()
+    {
+        if(this.path_session_started)
+        {
+            log_event('Paths', 'Session', this.current_path_name(), Date.now() - this.path_session_start_time);
+            this.path_session_started = false;
+        }
+    }
+
+    //
+    AnimData.prototype.image_session_start = function()
+    {
+        if(this.image_session_started)
+        {
+            this.image_session_end();
+        }
+        this.image_session_start_time = Date.now();
+        this.image_session_started = true;
+    }
+
+    AnimData.prototype.image_session_end = function()
+    {
+        if(this.image_session_started)
+        {
+            log_event('Grids', 'Session', this.current_image_name(), Date.now() - this.image_session_start_time);
+            this.image_session_started = false;
+        }
     }
 }
 

@@ -3,24 +3,57 @@ function Grid()
     var canvas  = new Canvasy('anim-grid'); // Canvasy
     var context = canvas.context; // Canvas context
     var mouse_over = false;
+    var grid = this;
+
+    // Scrub session
+    this.scrub_session_started = false;
+    this.scrub_session_start_time = Date.now();
+
+    // Recording session
+    this.draw_session_started = false;
+    this.draw_session_start_time = Date.now();
 
     var mouse_down = function(event)
     {
         animation.start_recording
             (canvas.mouse_x/ canvas.width, 
              canvas.mouse_y/ canvas.height);
+         
+        grid.scrub_session_end();
+        grid.draw_session_start();
     }
 
     var mouse_up = function()
-    {   animation.stop_recording();
+    {   
+        if(animation.is_recording())
+        {
+            grid.draw_session_end();
+        }
+        
+        animation.stop_recording();
+
+        if(!animation.is_playing() && !animation.is_recording())
+        {
+            grid.scrub_session_start();
+        }
     }
 
     var mouse_enter = function()
     {   mouse_over = true;
+        
+        if(!animation.is_playing() && !animation.is_recording())
+        {   
+            grid.scrub_session_start();
+        }
     }
 
     var mouse_leave = function()
     {   mouse_over = false;
+
+        if(!animation.is_playing())
+        {   
+            grid.scrub_session_end();
+        }
     }
 
     // Initialization & Update
@@ -129,6 +162,46 @@ function Grid()
     Object.defineProperty(this, 'canvas',
     {   get: function(){return canvas},
     });
+
+    // Logging
+    Grid.prototype.scrub_session_start = function()
+    {
+        if(this.scrub_session_started)
+        {
+            this.scrub_session_end();
+        }
+        this.scrub_session_start_time = Date.now();
+        this.scrub_session_started = true;
+    }
+
+    Grid.prototype.scrub_session_end = function()
+    {
+        if(this.scrub_session_started)
+        {
+            log_event('Recording', 'Scrub', animation.data.current_image_name(), Date.now() - this.scrub_session_start_time);
+            this.scrub_session_started = false;   
+        }
+    }
+
+    Grid.prototype.draw_session_start = function()
+    {
+        if(this.draw_session_started)
+        {
+            this.draw_session_end();
+        }
+        this.draw_session_start_time = Date.now();
+        this.draw_session_started = true;
+    }
+
+    Grid.prototype.draw_session_end = function()
+    {
+        if(this.draw_session_started)
+        {
+            log_event('Recording', 'Draw', animation.data.current_image_name(), Date.now() - this.draw_session_start_time);
+            this.draw_session_started = false;   
+        }
+    }
+
 
     this.setup();
 }

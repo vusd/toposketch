@@ -22,7 +22,7 @@ function JSONReader()
             //console.log(loaded_event.target.result);
             try{
                 this.json = JSON.parse(loaded_event.target.result);
-                callback(this.json);
+                callback(this.json, file);
             }
             catch(exception){
                 this.json = null;

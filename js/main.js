@@ -25,18 +25,20 @@ function init()
     setup_ui();
     register_events(); // Window level events
 
-    animation.data.add_grid_image('./imgs/pix2pix2.jpg', 7, 7);
-    animation.data.add_grid_image('./imgs/pix2pix1.jpg', 7, 7);
-    animation.data.add_grid_image('./imgs/GanHair.jpg', 12, 12);
-    animation.data.add_grid_image('./imgs/OpenSmile1.png', 7, 7);
-    animation.data.add_grid_image('./imgs/OldGlasses.jpg', 9, 9);
-    animation.data.add_grid_image('./imgs/OpenSmile2.jpg', 7, 7);
-    animation.data.add_grid_image('./imgs/PaleDisgust.png', 7, 7);
-    animation.data.set_grid(0);
+    animation.data.add_local_grid_image('./imgs/pix2pix2.jpg', 7, 7);
+    animation.data.add_local_grid_image('./imgs/pix2pix1.jpg', 7, 7);
+    animation.data.add_local_grid_image('./imgs/GanHair.jpg', 12, 12);
+    animation.data.add_local_grid_image('./imgs/OpenSmile1.png', 7, 7);
+    animation.data.add_local_grid_image('./imgs/OldGlasses.jpg', 9, 9);
+    animation.data.add_local_grid_image('./imgs/OpenSmile2.jpg', 7, 7);
+    animation.data.add_local_grid_image('./imgs/PaleDisgust.png', 7, 7);
+
+    animation.data.set_grid(0, true);
 
     let paths_loaded = function()
     {   // Since JSON files are loaded asynchronously, there is a callback to follow up on the loaded path
-        animation.data.set_path(0);
+        animation.data.set_path(0, true);
+        //animation.data.path_session_start();
     }
 
     animation.data.load_local_path('./sample_paths/range_4_corners.json', null);
@@ -44,7 +46,7 @@ function init()
     animation.data.load_local_path('./sample_paths/Kiss.json', paths_loaded); 
     animation.data.load_local_path('./sample_paths/letter_e.json', null);
     animation.data.load_local_path('./sample_paths/closedsmile_to_opensmile.json', null);
-    
+
     animation.play();
     start_loop(loop);
 }

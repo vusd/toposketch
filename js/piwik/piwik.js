@@ -17,16 +17,17 @@ _paq.push(['enableLinkTracking']);
 )();
 
 function log_event(category, action, name, value)
-{   console.log('Event ' + category + ', ' + action + ', ' + name + ', ' + value); 
+{   console.log(category + ', ' + action + ', ' + name + ', ' + value); 
     //_paq.push(['trackEvent', category, action, name, value]);
 }
 
-function log_toposketch_timestamp(action, name)
-{   // Logs TopoSketch event with timestamp from when page was loaded (seconds)
-    log_event('TopoSketch', action, name, (Date.now()-time_started)*0.001);
+// Setup to log last path and grid session info before unloading window
+window.onunload = function()
+{   
+    if(animation.data != null)
+    {
+        animation.data.path_session_end();
+        animation.data.path_session_end();   
+    }
 }
 
-function log_toposketch_duration(action, name, duration_millis)
-{   // Logs TopoSketch event with duration of action (seconds)
-    log_event('TopoSketch', action, name, duration_millis*0.001);
-}

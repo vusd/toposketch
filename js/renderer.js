@@ -119,7 +119,8 @@ function Renderer()
             {   this.gif_encoder.start();
             }
 
-            log_toposketch_timestamp('Start', 'Render');
+            log_event('Render', 'Start', this.animation_data.current_image_name(), this.animation_data.path.length+'frames');
+
             this.update_status('Starting render...');
             this.render_frame(this.rendering_frame);   
         }
@@ -191,8 +192,7 @@ function Renderer()
             renderer.show_render(this.gif_encoder.stream().getData());
         }
 
-        log_toposketch_timestamp('Finish', 'Render');
-        log_toposketch_duration('Finish After', 'Render', Date.now()-this.rendering_start_time);
+        log_event('Render', 'Complete', this.animation_data.current_image_name(),  Date.now()-this.rendering_start_time);
     }
 
     Renderer.prototype.render_path_image = function()
@@ -266,7 +266,14 @@ function Renderer()
         {   
             let external_window = window.open('');
             external_window.document.write(animation.outerHTML);
+            log_event('Render', 'Popout');
         }
+
+        download.onclick = function()
+        {
+            log_event('Render', 'Download');
+        }
+
         // Append download info
         download_link.href=animation.src;
         download_link.target='_blank';
@@ -303,6 +310,8 @@ function Renderer()
 
     Renderer.prototype.stop_render = function()
     {           
+        log_event('Render', 'Abort', this.animation_data.current_image_name(), (Date.now()-this.rendering_start_time) + '(' + this.rendering_frame +'frames)');
+
         if(this.render_worker != null)
         {   this.render_worker.terminate();
             //this.render_worker.postMessage(['kill','']);
@@ -314,8 +323,7 @@ function Renderer()
         this.reset_render();
         this.update_status('Render Animation');
         
-        log_toposketch_timestamp('Cancel', 'Render');
-        log_toposketch_duration('Cancel After', 'Render', Date.now() - this.rendering_start_time);
+        
     }
 
     Renderer.prototype.reset_render = function()
@@ -333,6 +341,8 @@ function Renderer()
         this.animation_data.image_shape[0] = input_anim.image_shape[0];
         this.animation_data.image_shape[1] = input_anim.image_shape[1];
         this.animation_data.path = Array.from(input_anim.path);
+        this.animation_data.image_list = Array.from(input_anim.image_list);
+        this.animation_data.current_grid_index = input_anim.current_grid_index;
     }
 
     this.setup();
