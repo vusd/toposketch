@@ -119,7 +119,7 @@ function Renderer()
             {   this.gif_encoder.start();
             }
 
-            log_event('Render', 'Start', this.animation_data.current_image_name(), this.animation_data.path.length+'frames');
+            log_event('Render', 'Start', this.animation_data.current_image_name(), this.animation_data.path.length);
 
             this.update_status('Starting render...');
             this.render_frame(this.rendering_frame);   
@@ -307,7 +307,7 @@ function Renderer()
 
     Renderer.prototype.stop_render = function()
     {           
-        log_event('Render', 'Abort', this.animation_data.current_image_name(), (Date.now()-this.rendering_start_time) + '(' + this.rendering_frame +'frames)');
+        log_event('Render', 'Abort', this.animation_data.current_image_name(), Date.now()-this.rendering_start_time);
 
         if(this.render_worker != null)
         {   this.render_worker.terminate();
