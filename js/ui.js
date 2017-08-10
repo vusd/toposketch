@@ -5,6 +5,11 @@ var save_json_button;
 var load_json_button;
 var render_button;
 var load_grid_button;
+var next_path_button;
+var prev_path_button;
+var clear_path_button;
+var prev_grid_button;
+var prev_next_button;
 
 function Timeline()
 {
@@ -182,6 +187,51 @@ function LoadJsonButton()
     this.setup();
 }
 
+function NextPathButton()
+{
+    var element = document.getElementById('next-path-button');
+    element.onclick = function()
+    {
+        animation.data.next_path();
+    }
+}
+
+function PrevPathButton()
+{
+    var element = document.getElementById('prev-path-button');
+    element.onclick = function()
+    {
+        animation.data.prev_path();
+    }
+}
+
+function ClearPathButton()
+{
+    var element = document.getElementById('clear-button');
+    element.onclick = function()
+    {
+        animation.data.clear();
+    }
+}
+
+function NextGridButton()
+{
+    var element = document.getElementById('next-grid-button');
+    element.onclick = function()
+    {
+        animation.data.next_grid();
+    }
+}
+
+function PrevGridButton()
+{
+    var element = document.getElementById('prev-grid-button');
+    element.onclick = function()
+    {
+        animation.data.prev_grid();
+    }
+}
+
 function LoadGridButton()
 {
     var element = document.getElementById('load-grid-button');
@@ -222,6 +272,13 @@ function setup_ui()
     render_button = new RenderButton();
     load_grid_button = new LoadGridButton();
     timeline = new Timeline();
+
+    next_path_button = new NextPathButton();
+    prev_path_button = new PrevPathButton();
+    clear_path_button = new ClearPathButton();
+    prev_grid_button = new PrevGridButton();
+    prev_next_button = new NextGridButton();
+
 }
 
 

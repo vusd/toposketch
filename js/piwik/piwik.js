@@ -16,6 +16,6 @@ _paq.push(['enableLinkTracking']);
 )();
 
 function log_event(category, action, name, value)
-{
-    _paq.push(['trackEvent', category, action, name, value]);
+{   console.log('Event ' + category + ', ' + action + ', ' + name + ', ' + value); 
+    //_paq.push(['trackEvent', category, action, name, value]);
 }
