@@ -6,8 +6,8 @@ Piwik [logs events](https://piwik.org/docs/event-tracking/) using the following 
 | ------------- | -----------|------------------------ | --------------------------- | -----
 | **Recording** | Scrub      | `[current grid image]`  | `[duration in ms]`          | When the mouse is over the grid area, but not drawing
 |               | Draw       | `[current grid image]`  | `[duration in ms]`          | After the mouse is done drawing over the grid area         
-| **Paths**     | Session    | `[current loaded path]` | `[duration in ms]`          | When an example/loaded path is changed 
-| **Grids**     | Session    | `[current grid image]`  | `[duration in ms]`          | When an example/loaded grid is changed 
+| **Paths**     | Session    | `[current loaded path]` | `[path filename in ms]`     | When an example/loaded path is changed 
+| **Grids**     | Session    | `[current grid image]`  | `[image filename in ms]`    | When an example/loaded grid is changed 
 | **Render**    | Start      | `[rendered grid image]` | `[# of frames]`             | When a render is started
 |               | Abort      | `[rendered grid image]` | `[time waited in ms]`       | When a render is cancelled
 |               | Complete   | `[rendered grid image]` | `[time taken in ms]`        | When a render is finished
@@ -19,12 +19,12 @@ Piwik [logs events](https://piwik.org/docs/event-tracking/) using the following 
 |               | Path       | Next                    |                             | When "next example path" button is pressed
 |               | Path       | Prev                    |                             | When "previous example path" button is pressed
 |               | Path       | Clear                   |                             | When "clear path" button is pressed
-|               | Path       | Add Success             |                             | When "add path" button is pressed and a valid .json file is loaded
-|               | Path       | Add Fail                |                             | When "add path" button is pressed and an invalid .json file is provided
+|               | Path       | Add Success             | `[filename]`                | When "add path" button is pressed and a valid .json file is loaded
+|               | Path       | Add Fail                | `[filename]`                | When "add path" button is pressed and an invalid .json file is provided
 |               | Grid       | Next                    |                             | When "next example grid" button is pressed
 |               | Grid       | Prev                    |                             | When "previous example grid" button is pressed
-|               | Grid       | Add Success             |                             | When "add grid" button is pressed and a valid image file is loaded
-|               | Grid       | Add Fail                |                             | When "add grid" button is pressed and an invalid image file is provided
+|               | Grid       | Add Success             | `[filename]`                | When "add grid" button is pressed and a valid image file is loaded
+|               | Grid       | Add Fail                | `[filename]`                | When "add grid" button is pressed and an invalid image file is provided
 
 ## Webpage Events
 
