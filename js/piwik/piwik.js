@@ -17,8 +17,8 @@ _paq.push(['enableLinkTracking']);
 )();
 
 function log_event(category, action, name, value)
-{   console.log(category + ', ' + action + ', ' + name + ', ' + value); 
-    //_paq.push(['trackEvent', category, action, name, value]);
+{   //console.log(category + ', ' + action + ', ' + name + ', ' + value); 
+    _paq.push(['trackEvent', category, action, name, value]);
 }
 
 // Setup to log last path and grid session info before unloading window
