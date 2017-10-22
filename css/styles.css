@@ -54,6 +54,16 @@ html, body
     left:0px;
 }
 
+.left
+{
+    float: left;
+}
+
+.right
+{
+    float: right;
+}
+
 /* Toolbar
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -70,7 +80,7 @@ html, body
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
 
-    float:left;
+    /*float:left;*/
     cursor: pointer;
     background-color: rgba(255,255,255,255);
     border-radius: 3px;
@@ -127,9 +137,25 @@ html, body
     top: 3px;
 }
 
+.tool-divider
+{
+    position:relative;
+    background-color:#DDD;
+    /*float:left;*/
+
+    padding: 0px 0px 0px 0px; 
+    margin:0px 3px 0px 3px;
+
+    width:1px;
+    height:36px;
+    min-height:36px;
+    
+    opacity:0.75;
+}
+
 #render-button
 {   padding:0px 12px 0px 12px;
-    float:right;
+    /*float:right;*/
 }
 
 .file-input-container
@@ -346,22 +372,21 @@ html, body
 /* Dropdown Options
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-#dropdown
-{   float:right;
+.dropdown
+{   /*float:right;*/
     position:relative;
     display: inline-block;
 }
 
-#dropdown:hover #dropdown-list
+.dropdown:hover .dropdown-list
 {   display: block;
 }
 
-#dropdown-list
+.dropdown-list
 {   position:absolute;
     z-index: 1;
     top:0px;
-    right:3px;
-    width:200px;
+    width:120px;
     height:auto;
     display: none;
     padding:0px;
@@ -376,7 +401,17 @@ html, body
     overflow:hidden;
 }
 
-#dropdown-list a
+.dropdown-right
+{
+    right:3px;
+}
+
+.dropdown-left
+{
+    left:3px;
+}
+
+.dropdown-list a
 {   margin:0px;
     color:black;
     width:100%;

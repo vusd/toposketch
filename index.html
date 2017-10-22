@@ -16,6 +16,7 @@
         <script type='text/javascript' src='./js/utils.js'></script>  
         <script type='text/javascript' src='./js/canvasy/canvasy.js'></script>
         <script type='text/javascript' src='./js/animation.js'></script>
+        <script type='text/javascript' src='./js/animdata.js'></script>
         <script type='text/javascript' src='./js/grid.js'></script>
         <script type='text/javascript' src='./js/display.js'></script>
         <script type='text/javascript' src='./js/renderer.js'></script>
@@ -57,36 +58,91 @@
                 </div>     
 
                 <div class='twelve columns toolbar' style="background-color:none;">
-               
-                <button title='Previous grid' id ='prev-grid-button' class='tool-button'>
+                    
+                <button title='Previous grid' id ='prev-grid-button' class='tool-button left'>
                     <img src="./imgs/icons/ic_grid_left_24px.svg"> </button>
-               
-               <button title='Next grid' id='next-grid-button' class='tool-button'>
-                   <img src="./imgs/icons/ic_grid_right_24px.svg"> </button>
+            
+                <button title='Next grid' id='next-grid-button' class='tool-button left'>
+                <img src="./imgs/icons/ic_grid_right_24px.svg"> </button>
+
+                <div class='dropdown left'>
+                    <button class='tool-button'>
+                        <img src ='./imgs/icons/ic_more_horiz_black_24px.svg'>
+                    </button>
+                    <div class='dropdown-list dropdown-right'>
+                        
+                        <div class='dropdown-button'>
+                            <p>Smile</p>
+                        </div>
+
+                        <div class='dropdown-button'>
+                            <p>Disgust</p>
+                        </div>
+
+                        <div class='dropdown-button'>
+                            <p>Open Mouth</p>
+                        </div>
+                        
+                        <div class='dropdown-button'>
+                            <p>Glasses</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class='dropdown left'>
+                    <button class='tool-button'>
+                        <img src ='./imgs/icons/ic_more_horiz_black_24px.svg'>
+                    </button>
+                    <div class='dropdown-list dropdown-left'>
+                        
+                        <div class='dropdown-button'>
+                            <p>Smile</p>
+                        </div>
+
+                        <div class='dropdown-button'>
+                            <p>Disgust</p>
+                        </div>
+
+                        <div class='dropdown-button'>
+                            <p>Open Mouth</p>
+                        </div>
+                        
+                        <div class='dropdown-button'>
+                            <p>Glasses</p>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class='tool-divider left'></div>
 
                 <!-- File inputs are notorious to style, so this is a workaround-->
 
-                <button title='Previous example path' id='prev-path-button' class='tool-button'>
+                <button title='Previous example path' id='prev-path-button' class='tool-button left'>
                     <img src='imgs/icons/ic_prev_path_24px.svg'>
                 </button>
 
-                <button title='Next example path' id='next-path-button' class='tool-button'>
+                <button title='Next example path' id='next-path-button' class='tool-button left'>
                     <img src='imgs/icons/ic_next_path_24px.svg'>
                 </button>
 
-                <button title='Clear path' id='clear-button' class='tool-button'>
+                <button title='Clear path' id='clear-button' class='tool-button left'>
                     <img src='./imgs/icons/ic_clear_path_24px.svg'>
                 </button>
                 
-                <button id='render-button' class='tool-button'>
+                <!-- Extra option and render -->
+
+                <button id='render-button' class='tool-button right'>
                     Render Animation
                 </button>
 
-                <div id='dropdown'>
-                    <button id='dropdown-icon' class='tool-button'>
+                <div class='dropdown right'>
+                    <button class='tool-button'>
                         <img src ='./imgs/icons/ic_more_horiz_black_24px.svg'>
                     </button>
-                    <div id='dropdown-list'>
+                    <div class='dropdown-list dropdown-right'>
 
                         <div class='dropdown-button file-input-container'>
                             <p>Add Path</p>
@@ -106,8 +162,9 @@
                         
                     </div>
                 </div>
-
             </div>
+
+            
             
             <div id='anim-windows' class='twelve columns' style="background-color:lightgrey;">
                 <canvas id='anim-grid' class='six columns' style="background-color:lightgrey;"></canvas>
