@@ -7,12 +7,13 @@
         <title>TopoSketch Web App</title>
 
         <script type="text/javascript" src="./js/piwik/piwik.js"></script>
+        <script type="text/javascript" src="./js/webcamjs/webcam.min.js"></script>
 
         <script type="text/javascript" src="./js/jsgif/LZWEncoder.js"></script>
         <script type="text/javascript" src="./js/jsgif/NeuQuant.js"></script>
         <script type="text/javascript" src="./js/jsgif/GIFEncoder.js"></script>
         <script type="text/javascript" src="./js/jsgif/b64.js"></script>
-
+  
         <script type='text/javascript' src='./js/utils.js'></script>  
         <script type='text/javascript' src='./js/canvasy/canvasy.js'></script>
         <script type='text/javascript' src='./js/animation.js'></script>
@@ -56,9 +57,43 @@
 
                     </div>
                 </div>     
-
+                
                 <div class='twelve columns toolbar' style="background-color:none;">
-                    
+                
+                <button title='Generate Face' id='generate-face-button' class='tool-button left' style="z-index:10">
+                    :) 
+                    <div id='gen-face-diag' class='tool-button-diag'>
+                        
+                        
+                        <div title='Take a photo' id='gen-face-webcam-button' class='gen-face-button gen-face-image-slot' onclick="webcam_click();">
+                            
+                            <p id='gen-face-webcam-text'>Allow Webcam</p>
+                            <div id='gen-face-webcam-disp'></div>
+                            <div id='gen-face-webcam-flash'></div>
+                        </div>
+
+                        <div id='gen-face-upload-button' class='gen-face-button gen-face-image-slot'>
+                            <div id='gen-face-upload-disp'></div>
+
+                            
+
+                            <p id='gen-face-image-text-def'>No Image 
+                                Uploaded</p>
+                            <p id='gen-face-image-text-state'>
+                            </p>
+
+                            <input id='load-face-input' class='file-input-container' type='file'>
+                                    
+                        </div>
+                            
+                            
+                        <div class='gen-face-button'>
+                            <p>OK!</p>
+                        </div>
+
+                    </div>
+                </button>
+
                 <button title='Previous grid' id ='prev-grid-button' class='tool-button left'>
                     <img src="./imgs/icons/ic_grid_left_24px.svg"> </button>
             
@@ -120,40 +155,74 @@
                     <canvas id='anim-grid' class='twelve columns'></canvas>
                     
                     <div id='anim-grid-hface-button' class='small-button'> 
-                    :(
+                    <span id='anim-grid-hface-disp'>:O</span>
                         <div id='anim-grid-hface-container' class='face-container'>
-                            <div onclick="grid_axis_selected();" class='face-button'></div>
-                            <div onclick="grid_axis_selected();" class='face-button'></div>
-                            <div onclick="grid_axis_selected();" class='face-button'></div>
-                            <div onclick="grid_axis_selected();" class='face-button'></div>
-                            <div onclick="grid_axis_selected();" class='face-button'></div>
-                            <div onclick="grid_axis_selected();" class='face-button'></div>
-                            <div onclick="grid_axis_selected();" class='face-button'></div>
-                            <div onclick="grid_axis_selected();" class='face-button'></div>
+                            <div onclick="grid_haxis_selected(':D');" class='face-button'>
+                                :D
+                            </div>
+                            <div onclick="grid_haxis_selected(':|');" class='face-button'>
+                                :|
+                            </div>
+                            <div onclick="grid_haxis_selected(':P');" class='face-button'>
+                                :P
+                            </div>
+                            <div onclick="grid_haxis_selected(':)');" class='face-button'>
+                                :)
+                            </div>
+                            <div onclick="grid_haxis_selected(':(');" class='face-button'>
+                                :(
+                            </div>
+                            <div onclick="grid_haxis_selected(':O');" class='face-button'>
+                                :O
+                            </div>
+                            <div onclick="grid_haxis_selected('>:(');" class='face-button'>
+                                >:(
+                            </div>
+                            <div onclick="grid_haxis_selected(':/'
+                            );" class='face-button'>
+                                :/
+                            </div>
                         </div>
                     </div>
 
                     <div id='anim-grid-vface-button' class='small-button'> 
-                    :)
+                        <span id='anim-grid-vface-disp'>:)</span>
                         <div id='anim-grid-vface-container' class='face-container'>
-                            <div onclick="grid_axis_selected();" class='face-button'></div>
-                            <div onclick="grid_axis_selected();" class='face-button'></div>
-                            <div onclick="grid_axis_selected();" class='face-button'></div>
-                            <div onclick="grid_axis_selected();" class='face-button'></div>
-                            <div onclick="grid_axis_selected();" class='face-button'></div>
-                            <div onclick="grid_axis_selected();" class='face-button'></div>
-                            <div onclick="grid_axis_selected();" class='face-button'></div>
-                            <div onclick="grid_axis_selected();" class='face-button'></div>
+                            <div onclick="grid_vaxis_selected(':D');" class='face-button'>
+                                :D
+                            </div>
+                            <div onclick="grid_vaxis_selected(':|');" class='face-button'>
+                                :|
+                            </div>
+                            <div onclick="grid_vaxis_selected(':P');" class='face-button'>
+                                :P
+                            </div>
+                            <div onclick="grid_vaxis_selected(':)');" class='face-button'>
+                                :)
+                            </div>
+                            <div onclick="grid_vaxis_selected(':(');" class='face-button'>
+                                :(
+                            </div>
+                            <div onclick="grid_vaxis_selected(':O');" class='face-button'>
+                                :O
+                            </div>
+                            <div onclick="grid_vaxis_selected('>:(');" class='face-button'>
+                                >:(
+                            </div>
+                            <div onclick="grid_vaxis_selected(':/'
+                            );" class='face-button'>
+                                :/
+                            </div>
                         </div>
                     </div>
 
                     <div id='anim-grid-size-button' class='small-button'> 
-                    [+]
+                        [<span id='anim-grid-size-disp'> </span>]
                         <div id='anim-grid-size-container' class='gridsize-container'>
                             <span>Grid Size:</span
-                            ><div onclick="grid_size_selected();" class='gridsize-button'>7</div
-                            ><div onclick="grid_size_selected();" class='gridsize-button'>14</div
-                            ><div onclick="grid_size_selected();" class='gridsize-button'>28</div>
+                            ><div onclick="grid_size_selected(7);" class='gridsize-button'>7</div
+                            ><div onclick="grid_size_selected(14);" class='gridsize-button'>14</div
+                            ><div onclick="grid_size_selected(28);" class='gridsize-button'>28</div>
                         </div>
                     </div>
 

@@ -10,6 +10,9 @@ var prev_path_button;
 var clear_path_button;
 var prev_grid_button;
 var prev_next_button;
+var load_face_button;
+
+var webcam_enabled = false;
 
 function Timeline()
 {
@@ -289,6 +292,41 @@ function LoadGridButton()
     this.setup();
 }
 
+function LoadFaceButton()
+{
+    var element = document.getElementById('load-face-input');
+    var button = this;
+
+    this.on_change = function(e)
+    {   // From: https://stackoverflow.com/questions/12368910/html-display-image-after-selecting-filename
+        let selected_file = e.target.files[0];
+
+        let file_reader = new FileReader();
+
+        file_reader.onload = function(e)
+        {
+            //animation.data.add_grid_image(e.target.result, 7, 7, selected_file.name, true);
+            //console.log(selected_file.name);
+            
+            let blob = dataURItoBlob(e.target.result);
+            let image_to_upload = URL.createObjectURL(blob);
+            //console.log(blob);
+            set_input_image(image_to_upload);
+            get_id('gen-face-image-text-state').innerText = 'Using Image File';
+        }
+        
+        file_reader.readAsDataURL(selected_file);
+    }
+
+    LoadFaceButton.prototype.setup = function ()
+    {   
+        element.onchange = this.on_change;
+    }
+
+    this.setup();
+}
+
+
 function setup_ui()
 {   // Prevent middle click pan from messing up window
     document.addEventListener ("click", function (e) 
@@ -297,23 +335,41 @@ function setup_ui()
     });
 
     get_id('anim-grid-hface-button').onclick = function()
-    {   get_id('anim-grid-size-container').style.display = 'none';
-        get_id('anim-grid-vface-container').style.display = 'none';    
+    {   grid_close_menus();    
         get_id('anim-grid-hface-container').style.display = 'block';
     };  
 
     get_id('anim-grid-vface-button').onclick = function()
-    {   get_id('anim-grid-size-container').style.display = 'none';
-        get_id('anim-grid-hface-container').style.display = 'none';
+    {   grid_close_menus();
         get_id('anim-grid-vface-container').style.display = 'block';
     };
 
     get_id('anim-grid-size-button').onclick = function()
-    {   get_id('anim-grid-vface-container').style.display = 'none'; 
-        get_id('anim-grid-hface-container').style.display = 'none';
+    {   grid_close_menus();
         get_id('anim-grid-size-container').style.display = 'block';
     };
 
+    get_id('generate-face-button').onclick = function(event)
+    {   get_id('gen-face-diag').style.display = 'block';
+    }
+
+    get_id('gen-face-diag').onmouseleave = function(event)
+    {   get_id('gen-face-diag').style.display = 'none';
+    }
+
+    get_id('anim-grid-hface-container').onmouseleave = function(event)
+    {  grid_close_menus();
+    }
+
+    get_id('anim-grid-size-container').onmouseleave = function(event)
+    {  grid_close_menus();
+    }
+
+    get_id('anim-grid-vface-container').onmouseleave = function(event)
+    {  grid_close_menus();
+    }
+
+    /*
     get_id('anim-grid-hface-container').onclick = function(event)
     {   // Here to stop mouse event from bubbling up to parent button 
         // (which will stop it from hiding the face container)
@@ -331,6 +387,7 @@ function setup_ui()
         // (which will stop it from hiding the face container)
         event.stopPropagation();
     };
+    */
 
     play_button = new PlayButton();
     save_json_button = new SaveJsonButton();
@@ -339,6 +396,8 @@ function setup_ui()
     load_grid_button = new LoadGridButton();
     timeline = new Timeline();
 
+    load_face_button = new LoadFaceButton();
+
     next_path_button = new NextPathButton();
     prev_path_button = new PrevPathButton();
     clear_path_button = new ClearPathButton();
@@ -346,14 +405,83 @@ function setup_ui()
     prev_next_button = new NextGridButton();
 }
 
-function grid_axis_selected()
+function grid_haxis_selected(face)
+{   get_id('anim-grid-hface-disp').innerText = face;
+    grid_close_menus();
+}
+
+function grid_vaxis_selected(face)
+{   get_id('anim-grid-vface-disp').innerText = face;
+    grid_close_menus();
+}
+
+function grid_size_selected(size)
+{   get_id('anim-grid-size-disp').innerText = size;
+    grid_close_menus();
+}
+
+function grid_close_menus()
 {   get_id('anim-grid-hface-container').style.display = 'none';
     get_id('anim-grid-vface-container').style.display = 'none';
     get_id('anim-grid-size-container').style.display = 'none';
 }
 
-function grid_size_selected()
-{   get_id('anim-grid-hface-container').style.display = 'none';
-    get_id('anim-grid-vface-container').style.display = 'none';
-    get_id('anim-grid-size-container').style.display = 'none';
+function set_input_image(image_url)
+{
+    get_id('gen-face-upload-disp').style.backgroundImage = 'url('+image_url+')';
+    get_id('gen-face-image-text-def').style.display = 'none';
+    get_id('gen-face-image-text-state').style.display = 'block';
+}
+
+function webcam_hide()
+{   get_id('gen-face-webcam-disp').style.display = 'none';
+    get_id('gen-face-webcam-text').style.display = 'block';
+}
+
+function webcam_show()
+{   if(!webcam_enabled)
+    {   webcam_enabled = true;
+        setup_webcam();
+    }
+    get_id('gen-face-webcam-flash').style.display= 'block';
+    get_id('gen-face-webcam-disp').style.display = 'block';
+    get_id('gen-face-webcam-text').style.display = 'none';
+}
+
+function webcam_snap()
+{   Webcam.snap( function(data_uri) {
+        //console.log(data_uri);
+        //document.getElementById('my_result').innerHTML = '<img src="'+data_uri+'"/>';
+        
+        let blob = dataURItoBlob(data_uri);
+        let image_to_upload = URL.createObjectURL(blob);
+
+        get_id('gen-face-image-text-state').innerText = 'Using Webcam';
+        set_input_image(image_to_upload);
+        //console.log(image_to_upload);
+    } );
+}
+
+function webcam_click()
+{   if(webcam_enabled)
+    {   webcam_snap();
+    }
+    webcam_show();
+    
+}
+
+// WEBCAM
+function setup_webcam()
+{
+    Webcam.set({
+        width: 144,
+        height: 108,
+        dest_width: 640,
+        dest_height: 480,
+        crop_width: 480,
+        crop_height: 480,
+        image_format: 'jpeg',
+        jpeg_quality: 90
+    });
+    Webcam.attach( '#gen-face-webcam-disp' );
 }
