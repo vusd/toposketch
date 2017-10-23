@@ -40,7 +40,6 @@ html, body
     font-weight:bold;
 }
 
-
 .footer
 {
     height:100px;
@@ -52,6 +51,22 @@ html, body
     height: auto;
     top:0px;
     left:0px;
+    background-color: black;
+}
+
+#anim-grid
+{
+}
+
+#anim-grid-container
+{   padding: 35px;
+    background-color: lightgrey;
+    position:relative;
+}
+
+#anim-display
+{   background-color:black;
+    padding: 10px;
 }
 
 .left
@@ -64,7 +79,7 @@ html, body
     float: right;
 }
 
-/* Toolbar
+/* Toolbar & Buttons
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 .toolbar
@@ -72,6 +87,107 @@ html, body
     padding: 6px 0px 6px 0px;
     margin:0px;
     height:auto;
+}
+
+.small-button
+{   width: 25px;
+    height: 25px;
+    background-color: white;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.small-button:hover
+{   cursor: pointer;
+}
+
+.face-container
+{
+    background-color: white;
+    width:95px;
+    height:95px;
+    margin-left: -0px;
+    margin-top: -25px;
+    border-radius: 3px;
+    display:none;
+    position:absolute;
+}
+
+.face-button
+{   width: 25px;
+    height: 25px;
+    border-radius: 3px;
+    margin-left: 5px;
+    margin-top: 5px;
+    float: left;
+    background-color:rgba(0,0,0,.1);
+}
+
+.face-button:hover
+{   background-color:rgba(0,0,0,.2);
+    cursor: pointer;
+}
+
+#anim-grid-hface-button
+{   position: absolute;
+    top: 0px;
+    right: 0px;
+    margin: 5px;
+}
+
+#anim-grid-hface-button:hover
+{   
+}
+
+#anim-grid-vface-button
+{   position: absolute;
+    left: 0px;
+    bottom: 0px;
+    margin: 5px;
+}
+
+#anim-grid-vface-button:hover
+{   
+}
+
+#anim-grid-size-button
+{   position: absolute;
+    left: 0px;
+    top: 0px;
+    margin: 5px;
+}
+
+#anim-grid-size-button
+{
+    position: absolute;
+}
+
+#anim-grid-size-container
+{   position: absolute;
+    background-color: white;
+    width: 160px;
+    height: 35px;
+    border-radius: 3px;
+    margin-top: -24px;
+    text-align: left;
+    padding-left: 5px;
+    display:none;
+}
+
+.gridsize-button
+{   width: 25px;
+    height: 25px;
+    border-radius: 3px;
+    margin-left: 5px;
+    margin-top: 5px;
+    display: inline-block;
+    background-color:rgba(0,0,0,.1);
+    text-align: center;
+}
+
+.gridsize-button:hover
+{   background-color:rgba(0,0,0,.2);
+    cursor: pointer;
 }
 
 .tool-button
@@ -261,7 +377,7 @@ html, body
     border: none;
     height: 20px;
     width: 20px;
-    border-radius: 50%;
+    border-radius: 20%;
     background: white;
     margin-top: 2px;
 }
@@ -271,7 +387,7 @@ html, body
     border: none;
     height: 20px;
     width: 20px;
-    border-radius: 50%;
+    border-radius: 20%;
     background: white;
 }
 
@@ -280,7 +396,7 @@ html, body
     border: none;
     height: 20px;
     width: 20px;
-    border-radius: 50%;
+    border-radius: 20%;
     background: white;
     margin-top: 2px;
 }

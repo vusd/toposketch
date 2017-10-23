@@ -296,6 +296,42 @@ function setup_ui()
         e.preventDefault();
     });
 
+    get_id('anim-grid-hface-button').onclick = function()
+    {   get_id('anim-grid-size-container').style.display = 'none';
+        get_id('anim-grid-vface-container').style.display = 'none';    
+        get_id('anim-grid-hface-container').style.display = 'block';
+    };  
+
+    get_id('anim-grid-vface-button').onclick = function()
+    {   get_id('anim-grid-size-container').style.display = 'none';
+        get_id('anim-grid-hface-container').style.display = 'none';
+        get_id('anim-grid-vface-container').style.display = 'block';
+    };
+
+    get_id('anim-grid-size-button').onclick = function()
+    {   get_id('anim-grid-vface-container').style.display = 'none'; 
+        get_id('anim-grid-hface-container').style.display = 'none';
+        get_id('anim-grid-size-container').style.display = 'block';
+    };
+
+    get_id('anim-grid-hface-container').onclick = function(event)
+    {   // Here to stop mouse event from bubbling up to parent button 
+        // (which will stop it from hiding the face container)
+        event.stopPropagation();
+    };
+
+    get_id('anim-grid-vface-container').onclick = function(event)
+    {   // Here to stop mouse event from bubbling up to parent button 
+        // (which will stop it from hiding the face container)
+        event.stopPropagation();
+    };
+
+    get_id('anim-grid-size-container').onclick = function(event)
+    {   // Here to stop mouse event from bubbling up to parent button 
+        // (which will stop it from hiding the face container)
+        event.stopPropagation();
+    };
+
     play_button = new PlayButton();
     save_json_button = new SaveJsonButton();
     load_json_button = new LoadJsonButton();
@@ -308,7 +344,16 @@ function setup_ui()
     clear_path_button = new ClearPathButton();
     prev_grid_button = new PrevGridButton();
     prev_next_button = new NextGridButton();
-
 }
 
+function grid_axis_selected()
+{   get_id('anim-grid-hface-container').style.display = 'none';
+    get_id('anim-grid-vface-container').style.display = 'none';
+    get_id('anim-grid-size-container').style.display = 'none';
+}
 
+function grid_size_selected()
+{   get_id('anim-grid-hface-container').style.display = 'none';
+    get_id('anim-grid-vface-container').style.display = 'none';
+    get_id('anim-grid-size-container').style.display = 'none';
+}

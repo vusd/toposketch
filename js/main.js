@@ -53,9 +53,9 @@ function init()
 
 function loop()
 {
-
-    animation.update_cursor(grid.canvas.mouse_x/ grid.canvas.width,
-                            grid.canvas.mouse_y/ grid.canvas.height);
+    //console.log(grid.canvas.element);
+    animation.update_cursor( grid.canvas.mouse_x/ grid.canvas.width,
+                             grid.canvas.mouse_y/ grid.canvas.height );
     animation.update();
 
     grid.update();
@@ -102,10 +102,19 @@ function resize_windows()
                                +get_id('play-toolbar').style.paddingRight;
 
     get_id('timeline-container').style.width = (play_toolbar_width
-                                     -play_button_width
-                                     -play_toolbar_padding -6)  + 'px';
+                                                -play_button_width
+                                                -play_toolbar_padding -6)  + 'px';
 
     get_id('timeline').style.width = get_id('timeline-container').clientWidth;
+
+    // Center grid buttons along axes
+    let grid_container_w = get_id('anim-grid-container').offsetWidth;
+    let small_button_size = get_id('anim-grid-hface-button').offsetWidth;
+    let small_button_margin = parseInt( window.getComputedStyle(get_id('anim-grid-hface-button')).getPropertyValue("margin"));
+
+    get_id('anim-grid-hface-button').style.right = (grid_container_w/2) - (small_button_size/2) - 5 + "px";
+    get_id('anim-grid-vface-button').style.top = (grid_container_w/2) - (small_button_size/2) - 5 + "px";
+    
 
     //console.log(timeline_container.style.width);
 

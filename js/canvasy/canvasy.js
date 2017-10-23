@@ -48,6 +48,11 @@ function Canvasy (element_id)
         return this.context;
     }
 
+    Canvasy.prototype.get_style = function(computed_style)
+    {   // Gets the computed style of element
+        return window.getComputedStyle(this.element).getPropertyValue(computed_style); 
+    }
+
     Canvasy.prototype.setup_mouse_events = function()
     {   // Register and set mouse events to log_mouse method
         this.element.onmouseup    = this.log_mouse;

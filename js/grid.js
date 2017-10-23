@@ -16,11 +16,13 @@ function Grid()
     var mouse_down = function(event)
     {
         animation.start_recording
-            (canvas.mouse_x/ canvas.width, 
-             canvas.mouse_y/ canvas.height);
+            ( canvas.mouse_x/ canvas.width, 
+              canvas.mouse_y/ canvas.height );
          
         grid.scrub_session_end();
         grid.draw_session_start();
+
+        event.preventDefault();
     }
 
     var mouse_up = function()

@@ -65,57 +65,6 @@
                 <button title='Next grid' id='next-grid-button' class='tool-button left'>
                 <img src="./imgs/icons/ic_grid_right_24px.svg"> </button>
 
-                <div class='dropdown left'>
-                    <button class='tool-button'>
-                        <img src ='./imgs/icons/ic_more_horiz_black_24px.svg'>
-                    </button>
-                    <div class='dropdown-list dropdown-right'>
-                        
-                        <div class='dropdown-button'>
-                            <p>Smile</p>
-                        </div>
-
-                        <div class='dropdown-button'>
-                            <p>Disgust</p>
-                        </div>
-
-                        <div class='dropdown-button'>
-                            <p>Open Mouth</p>
-                        </div>
-                        
-                        <div class='dropdown-button'>
-                            <p>Glasses</p>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class='dropdown left'>
-                    <button class='tool-button'>
-                        <img src ='./imgs/icons/ic_more_horiz_black_24px.svg'>
-                    </button>
-                    <div class='dropdown-list dropdown-left'>
-                        
-                        <div class='dropdown-button'>
-                            <p>Smile</p>
-                        </div>
-
-                        <div class='dropdown-button'>
-                            <p>Disgust</p>
-                        </div>
-
-                        <div class='dropdown-button'>
-                            <p>Open Mouth</p>
-                        </div>
-                        
-                        <div class='dropdown-button'>
-                            <p>Glasses</p>
-                        </div>
-
-                    </div>
-                </div>
-
-
                 <div class='tool-divider left'></div>
 
                 <!-- File inputs are notorious to style, so this is a workaround-->
@@ -164,11 +113,54 @@
                 </div>
             </div>
 
-            
-            
-            <div id='anim-windows' class='twelve columns' style="background-color:lightgrey;">
-                <canvas id='anim-grid' class='six columns' style="background-color:lightgrey;"></canvas>
-                <canvas id='anim-display' class='six columns'></canvas>
+
+            <div id='anim-windows' class='twelve columns'>
+
+                <div id='anim-grid-container' class='eight columns'>
+                    <canvas id='anim-grid' class='twelve columns'></canvas>
+                    
+                    <div id='anim-grid-hface-button' class='small-button'> 
+                    :(
+                        <div id='anim-grid-hface-container' class='face-container'>
+                            <div onclick="grid_axis_selected();" class='face-button'></div>
+                            <div onclick="grid_axis_selected();" class='face-button'></div>
+                            <div onclick="grid_axis_selected();" class='face-button'></div>
+                            <div onclick="grid_axis_selected();" class='face-button'></div>
+                            <div onclick="grid_axis_selected();" class='face-button'></div>
+                            <div onclick="grid_axis_selected();" class='face-button'></div>
+                            <div onclick="grid_axis_selected();" class='face-button'></div>
+                            <div onclick="grid_axis_selected();" class='face-button'></div>
+                        </div>
+                    </div>
+
+                    <div id='anim-grid-vface-button' class='small-button'> 
+                    :)
+                        <div id='anim-grid-vface-container' class='face-container'>
+                            <div onclick="grid_axis_selected();" class='face-button'></div>
+                            <div onclick="grid_axis_selected();" class='face-button'></div>
+                            <div onclick="grid_axis_selected();" class='face-button'></div>
+                            <div onclick="grid_axis_selected();" class='face-button'></div>
+                            <div onclick="grid_axis_selected();" class='face-button'></div>
+                            <div onclick="grid_axis_selected();" class='face-button'></div>
+                            <div onclick="grid_axis_selected();" class='face-button'></div>
+                            <div onclick="grid_axis_selected();" class='face-button'></div>
+                        </div>
+                    </div>
+
+                    <div id='anim-grid-size-button' class='small-button'> 
+                    [+]
+                        <div id='anim-grid-size-container' class='gridsize-container'>
+                            <span>Grid Size:</span
+                            ><div onclick="grid_size_selected();" class='gridsize-button'>7</div
+                            ><div onclick="grid_size_selected();" class='gridsize-button'>14</div
+                            ><div onclick="grid_size_selected();" class='gridsize-button'>28</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <canvas id='anim-display' class='four columns'></canvas>
+                
             </div>
 
 
