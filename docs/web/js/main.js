@@ -25,6 +25,8 @@ function init()
     setup_ui();
     register_events(); // Window level events
 
+    animation.data.add_local_grid_image('./imgs/20171202_stangrid_val02_03_256.jpg', 7, 7);
+    animation.data.add_local_grid_image('./imgs/20171203_stangrid_val02_02_256.jpg', 7, 7);
     animation.data.add_local_grid_image('./imgs/pix2pix2.jpg', 7, 7);
     animation.data.add_local_grid_image('./imgs/pix2pix1.jpg', 7, 7);
     animation.data.add_local_grid_image('./imgs/GanHair.jpg', 12, 12);
@@ -32,7 +34,6 @@ function init()
     animation.data.add_local_grid_image('./imgs/OldGlasses.jpg', 9, 9);
     animation.data.add_local_grid_image('./imgs/OpenSmile2.jpg', 7, 7);
     animation.data.add_local_grid_image('./imgs/PaleDisgust.png', 7, 7);
-    animation.data.add_local_grid_image('./imgs/20171128_bal_smile_mopen_2625_val02_08.jpg', 5, 5);
 
     animation.data.set_grid(0, true);
 
