@@ -547,15 +547,41 @@ html, body
     padding-bottom:25px;
 }
 
+/*
+There is some fickering when gifs are displayed smaller than their native size.
+Unsure why it happens, it appears to be a recent issue, could be jsgif related. 
+Since rendered gifs are 256px, stylesheet has been set up to avoid making gifs 
+smaller than 256px (as much as possible anyway).
+*/
+
 .render-result-container
 {   height:auto;
     position:relative;
     top:0px;
-    right:0px;}
+    right:0px;
+    float:left;
+    width:33%;
+}
+
+@media (max-width: 770px)
+{
+    .render-result-container
+    {   width:50%;
+    }
+}
+
+@media (max-width: 500px)
+{
+    .render-result-container
+    {   width:100%;
+    }
+}
 
 .render-result-path
 {   float:left;
-    width:100%;}
+    width:100%;
+    opacity:0;
+}
 
 .render-result-animation
 {   -webkit-transition: opacity 0.4s;
@@ -570,6 +596,9 @@ html, body
 {   -webkit-transition: opacity 0.4s;
     transition: opacity 0.4s;
     opacity: 0.25;}
+
+.render-result-container:hover .render-result-path
+{   opacity: 1;}    
 
 .render-popout-button
 {   position:absolute;

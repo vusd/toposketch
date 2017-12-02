@@ -276,8 +276,8 @@ function Renderer()
         download_link.target='_blank';
         download_link.download = 'animation.gif';
 
-        container.classList.add('three');
-        container.classList.add('columns');
+        //container.classList.add('three'); // No longer using skeleton.js for grid layout
+        //container.classList.add('columns');
         container.classList.add('render-result-container');
         animation.classList.add('render-result-animation');
         path.classList.add('render-result-path');
