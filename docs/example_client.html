@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File uploading to Flask server via POST</title>
+
+    <!-- Resources
+    http://codular.com/javascript-ajax-file-upload-with-progress
+    https://stackoverflow.com/questions/8064691/how-do-i-pass-along-variables-with-xmlhttprequest
+    -->
+    <script>
+        var uuid = '';
+        var response;
+        var server_url = server_url = "http://127.0.0.1:5000/grids";
+
+        function RequestGrid()
+        {   
+            if(uuid)
+            {   let request = new XMLHttpRequest(); // This is the GET request sent to server
+                let params = "uuid="+uuid;
+
+                 request.onreadystatechange = function()
+                {   // If the request is complete and has an OK status
+                    if(request.readyState == XMLHttpRequest.DONE && request.status == 200)
+                    {
+                        response = request.response;
+                        //console.log(response);
+                        document.getElementById("result-image").src = response;
+                        //uuid = response.uuid;
+                    }
+                    else 
+                    {
+                        console.log(request.status);
+                    }
+                }
+
+                request.open("GET", server_url + "?" + params);
+                request.send();
+            }
+        }
+
+        function UploadFile()
+        {
+            let file_selector = document.getElementById("file_selector");
+
+            console.log("There are " + file_selector.files.length + " file(s) detected!");
+            console.log("---")
+            console.log("These are the files: " + file_selector.files);
+            console.log("===")
+
+            if(file_selector.files.length == 1)
+            {   
+                let selected_file = file_selector.files[0]; // This is the selected file
+                let data = new FormData(); // This is the formatted data to upload
+                let request = new XMLHttpRequest(); // This is the POST request sent to server
+               
+                //===== Creating Request & Responses =====//
+                console.log("Uploading " + selected_file.name + "!");
+                data.append("file", selected_file);
+
+                request.onreadystatechange = function()
+                {   // If the request is complete and has an OK status
+                    if(request.readyState == XMLHttpRequest.DONE && request.status == 200)
+                    {
+                        response = JSON.parse(request.response);
+                        uuid = response.uuid;
+                    }
+                    else 
+                    {
+                        console.log(request.status)
+                    }
+                }
+                
+                //===== Sending Request =====//
+                console.log("Sending POST request to " + server_url);
+                request.open("POST", server_url);
+                request.send(data);
+            }
+        }
+        
+    </script>
+
+</head>
+
+<body>
+    <div>
+        <input type="file" id="file_selector">
+        <button onclick="UploadFile()">Upload File!</button>
+    </div>
+
+    <div>
+        <button onclick="RequestGrid()">Request Grid!</button>
+    </div>
+
+    <img id="result-image" src="">
+
+</body>
+</html>
