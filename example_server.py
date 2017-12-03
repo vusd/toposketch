@@ -54,9 +54,14 @@ def save_file(file):
     print("File saved as " + new_filepath);
     return new_filename
 
-@app.route('/')
+@app.route('/example_page.html')
 def home():
-    return render_template('example_server_index.html')
+    return render_template('example_server_page.html')
+
+# note: in the future we can change index.html to a different file
+@app.route('/')
+def root():
+    return app.send_static_file('index.html')
 
 @app.route('/grids', methods=['GET', 'POST'])
 def generate_grid():
