@@ -12,6 +12,7 @@ from werkzeug.utils import secure_filename
 from flask_cors import CORS
 
 REQUEST_PATH = './grids'
+UPLOADING_FOLDER = './grids/uploading'
 UPLOAD_FOLDER = './grids/uploads'
 PROCESSED_FOLDER = './grids/processed'
 
@@ -20,6 +21,7 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 app = Flask(__name__, static_folder='docs', static_url_path='')
 CORS(app)
 
+app.config['UPLOADING_FOLDER'] = UPLOADING_FOLDER
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def get_extension(filename):
@@ -44,13 +46,16 @@ def save_file(file):
     Saves file to local directory, renames it with an UUID, and returns the UUID
     """
     filename = secure_filename(file.filename)
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    filepath = os.path.join(app.config['UPLOADING_FOLDER'], filename)
 
     new_filename = str(uuid.uuid4())
     new_filepath = app.config['UPLOAD_FOLDER'] + os.sep + new_filename +"."+ get_extension(file.filename)
 
     file.save(filepath)
     os.rename(filepath, new_filepath)
+    # touch the file to update the timestamp
+    os.utime(new_filepath, None)
+
     print("File saved as " + new_filepath);
     return new_filename
 
@@ -83,7 +88,8 @@ def generate_grid():
     if request.method == 'GET':
         # Receives request for a grid and returns with data uri if avaiable
         if(request.args.get('uuid')):
-            path = PROCESSED_FOLDER + os.sep + "OpenSmile1.png"
+            # path = PROCESSED_FOLDER + os.sep + "OpenSmile1.png"
+            path = "{}.jpg".format(os.path.join(PROCESSED_FOLDER, request.args.get('uuid')))
             encoded = base64.b64encode(open(path, "rb").read())
             # Sends "generated" image back as a data uri https://stackoverflow.com/questions/25140826/generate-image-embed-in-flask-with-a-data-uri/25141268
             data_url = 'data:image/png;base64,{}'.format(urllib.parse.quote(encoded))
@@ -106,4 +112,4 @@ def generate_grid():
         return jsonify(data) 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
