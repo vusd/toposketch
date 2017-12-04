@@ -55,7 +55,8 @@ function b64toBlob(b64Data, contentType, sliceSize) {
   return blob;
 }
 
-function dataURItoBlob(dataURI) {
+function dataURItoBlob(dataURI) 
+{
     // From https://stackoverflow.com/questions/12168909/blob-from-dataurl
     // convert base64 to raw binary data held in a string
     // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
@@ -79,4 +80,20 @@ function dataURItoBlob(dataURI) {
     var blob = new Blob([ab], {type: mimeString});
     return blob;
   
-  }
+}
+
+function blobToFile(theBlob, fileName){
+    // From https://stackoverflow.com/questions/27159179/how-to-convert-blob-to-file-in-javascript
+    //A Blob() is almost a File() - it's just missing the two properties below which we will add
+    theBlob.lastModifiedDate = new Date();
+    theBlob.name = fileName;
+    return theBlob;
+}
+
+function allowed_file(filename)
+{   let allowed_extensions = ['.png','.jpeg','.jpg','.bmp'];
+    let extension = filename.substring(
+                        filename.lastIndexOf('.') == -1 ? filename.length: filename.lastIndexOf('.'),
+                        filename.length).toLowerCase();
+    return allowed_extensions.indexOf(extension) != -1 ? true:false;
+}

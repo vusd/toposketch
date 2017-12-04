@@ -11,6 +11,7 @@ var clear_path_button;
 var prev_grid_button;
 var prev_next_button;
 var load_face_button;
+var generate_grid_button;
 
 var webcam_enabled = false;
 
@@ -214,6 +215,8 @@ function LoadJsonButton()
     this.setup();
 }
 
+
+
 function NextPathButton()
 {
     var element = document.getElementById('next-path-button');
@@ -296,31 +299,67 @@ function LoadFaceButton()
 {
     var element = document.getElementById('load-face-input');
     var button = this;
-
+    
     this.on_change = function(e)
     {   // From: https://stackoverflow.com/questions/12368910/html-display-image-after-selecting-filename
+        
         let selected_file = e.target.files[0];
 
-        let file_reader = new FileReader();
-
-        file_reader.onload = function(e)
+        if(allowed_file(selected_file.name))
         {
-            //animation.data.add_grid_image(e.target.result, 7, 7, selected_file.name, true);
-            //console.log(selected_file.name);
-            
-            let blob = dataURItoBlob(e.target.result);
-            let image_to_upload = URL.createObjectURL(blob);
-            //console.log(blob);
-            set_input_image(image_to_upload);
-            get_id('gen-face-image-text-state').innerText = 'Using Image File';
-        }
+            let file_reader = new FileReader();
+            generate_grid_button.set_input_image(selected_file);
+
+            file_reader.onload = function(e)
+            {
+                //animation.data.add_grid_image(e.target.result, 7, 7, selected_file.name, true);
         
-        file_reader.readAsDataURL(selected_file);
+                let blob = dataURItoBlob(e.target.result);
+                let image_to_upload = URL.createObjectURL(blob);
+                //console.log(blob);
+                set_input_image(image_to_upload);
+                get_id('gen-face-image-text-state').innerText = 'Using Image File';
+            }
+            
+            file_reader.readAsDataURL(selected_file);
+        }
     }
 
     LoadFaceButton.prototype.setup = function ()
     {   
         element.onchange = this.on_change;
+    }
+
+    this.setup();
+}
+
+function GenerateGridButton()
+{   // Load Path
+    var element = document.getElementById('generate-grid-button');
+    var button = this;
+    this.stored_imagefile;
+
+    this.on_click = function(e)
+    {   console.log(button.stored_imagefile);
+        if(button.stored_imagefile != null)
+        {   
+            requests.request_grid(button.stored_imagefile);
+        }
+    }
+
+    GenerateGridButton.prototype.setup = function ()
+    {   
+        element.onclick = this.on_click;
+    }
+
+    GenerateGridButton.prototype.set_input_image = function(file)
+    {   //console.log(file);
+        this.stored_imagefile = file;
+    }
+
+    GenerateGridButton.prototype.clear_input_image = function()
+    {
+        this.stored_imagefile = null;
     }
 
     this.setup();
@@ -403,6 +442,8 @@ function setup_ui()
     clear_path_button = new ClearPathButton();
     prev_grid_button = new PrevGridButton();
     prev_next_button = new NextGridButton();
+
+    generate_grid_button = new GenerateGridButton();
 }
 
 function grid_haxis_selected(face)
@@ -456,9 +497,20 @@ function webcam_snap()
         let blob = dataURItoBlob(data_uri);
         let image_to_upload = URL.createObjectURL(blob);
 
-        get_id('gen-face-image-text-state').innerText = 'Using Webcam';
-        set_input_image(image_to_upload);
-        //console.log(image_to_upload);
+        // Get DataURI image format
+        let semicolon = data_uri.indexOf(";");
+        let fslash = data_uri.indexOf("/");
+        let format = data_uri.substring(fslash+1,semicolon);
+
+        let webcam_image = blobToFile(blob, "webcam."+format);
+        
+        if(allowed_file(webcam_image.name))
+        {
+            generate_grid_button.set_input_image(webcam_image);    
+            get_id('gen-face-image-text-state').innerText = 'Using Webcam';
+            set_input_image(image_to_upload);
+            //console.log(image_to_upload);        
+        }
     } );
 }
 
@@ -467,7 +519,6 @@ function webcam_click()
     {   webcam_snap();
     }
     webcam_show();
-    
 }
 
 // WEBCAM

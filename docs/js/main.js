@@ -11,6 +11,9 @@ var renderer;
 var cur_timestamp; // For calculating fps
 var fps;
 
+// Requests
+var requests;
+
 var first_loop = true;
 
 function init()
@@ -21,6 +24,7 @@ function init()
     display = new Display();
     renderer = new Renderer();
     cur_timestamp = time();
+    requests = new RequestManager();
     
     setup_ui();
     register_events(); // Window level events
@@ -62,6 +66,8 @@ function loop()
 
     grid.update();
     display.update();
+
+    requests.update_requests();
 
     calculate_fps();
     get_id('fps').innerText = fps + ' FPS'
