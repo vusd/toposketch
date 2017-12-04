@@ -1,6 +1,6 @@
 #!/bin/bash
 
-INPUTDIR="grids/processed"
+INPUTDIR="docs/processed"
 
 mkdir -p $INPUTDIR
 

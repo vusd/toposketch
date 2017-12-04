@@ -1,7 +1,7 @@
 #!/bin/bash
 
 INPUTDIR="grids/rawgrid"
-OUTPUTDIR="grids/processed"
+OUTPUTDIR="docs/processed"
 
 mkdir -p $INPUTDIR
 mkdir -p $OUTPUTDIR

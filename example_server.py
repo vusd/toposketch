@@ -14,7 +14,8 @@ from flask_cors import CORS
 REQUEST_PATH = './grids'
 UPLOADING_FOLDER = './grids/uploading'
 UPLOAD_FOLDER = './grids/uploads'
-PROCESSED_FOLDER = './grids/processed'
+PROCESSED_FOLDER = '/processed'
+#PROCESSED_FOLDER = 'http://toposketch.vusd.s3-website-us-east-1.amazonaws.com'
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
@@ -90,10 +91,11 @@ def generate_grid():
         if(request.args.get('uuid')):
             # path = PROCESSED_FOLDER + os.sep + "OpenSmile1.png"
             path = "{}.jpg".format(os.path.join(PROCESSED_FOLDER, request.args.get('uuid')))
-            encoded = base64.b64encode(open(path, "rb").read())
+            return redirect(path, code=302)
+            ## encoded = base64.b64encode(open(path, "rb").read())
             # Sends "generated" image back as a data uri https://stackoverflow.com/questions/25140826/generate-image-embed-in-flask-with-a-data-uri/25141268
-            data_url = 'data:image/png;base64,{}'.format(urllib.parse.quote(encoded))
-            return data_url
+            ## data_url = 'data:image/png;base64,{}'.format(urllib.parse.quote(encoded))
+            ## return data_url
         return ""
 
     elif request.method == 'POST':
