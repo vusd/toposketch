@@ -23,9 +23,11 @@
                 {   // If the request is complete and has an OK status
                     if(request.readyState == XMLHttpRequest.DONE && request.status == 200)
                     {
-                        response = request.response;
+                        //response = request.response;
+                        let image_src = request.responseURL; 
+                        //console.log(image_src);
                         //console.log(response);
-                        document.getElementById("result-image").src = response;
+                        document.getElementById("result-image").src = image_src;
                         //uuid = response.uuid;
                     }
                     else 
