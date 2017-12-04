@@ -83,11 +83,11 @@ function dataURItoBlob(dataURI)
 }
 
 function blobToFile(theBlob, fileName){
-    // From https://stackoverflow.com/questions/27159179/how-to-convert-blob-to-file-in-javascript
-    //A Blob() is almost a File() - it's just missing the two properties below which we will add
-    theBlob.lastModifiedDate = new Date();
-    theBlob.name = fileName;
-    return theBlob;
+    // From https://stackoverflow.com/questions/27553617/convert-blob-to-file
+
+    var file = new File([theBlob], fileName, {type: theBlob.type, lastModified: Date.now()});
+
+    return file;
 }
 
 function allowed_file(filename)

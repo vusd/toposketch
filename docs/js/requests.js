@@ -30,8 +30,8 @@ function Request()
 {
     this.uuid = '';
     //this.server_url = 'http://54.89.204.0:8889/grids';
-    //this.server_url = 'http://127.0.0.1:5000/grids';
-    this.server_url = '/grids';
+    this.server_url = 'http://127.0.0.1:5000/grids';
+    //this.server_url = '/grids';
     this.image_response;
     this.done = false;
 
