@@ -60,6 +60,7 @@ function Request()
 
     Request.prototype.close = function()
     {   console.log("Request closing...")
+        generate_grid_dialog.update_status("");
         this.done = true;
     }
 
@@ -90,16 +91,20 @@ function Request()
                 {
                     response = JSON.parse(request.response);
                     _request.uuid = response.uuid;
+                    generate_grid_dialog.update_status("Image Uploaded!");
                     console.log("File received by server and assigned UUID of " + this.uuid);
                 }
                 else 
                 {
                     console.log("Uh oh! " + request.status)
+                    generate_grid_dialog.update_status("Upload Failed!");
                 }
             }
 
             //===== Sending Request =====//
             console.log("Sending file to server via POST...");
+            
+            generate_grid_dialog.update_status("Uploading Image...");
             request.open("POST", this.server_url);
             request.send(data);
         }
@@ -122,6 +127,7 @@ function Request()
                     response = request.response;
                     _request.image_response = response;
                     console.log("Got grid back from server");
+                    generate_grid_dialog.update_status("Grid Generated!");
                     //console.log(this.image_response);
                     
                     //let grid_blob = dataURItoBlob(this.image_response);
@@ -137,6 +143,7 @@ function Request()
                 }
             }
             request.open("GET", this.server_url + "?" + params);
+            generate_grid_dialog.update_status("Generating Grid...");
             request.send();
         }
     }

@@ -10,10 +10,8 @@ var prev_path_button;
 var clear_path_button;
 var prev_grid_button;
 var prev_next_button;
-var load_face_button;
-var generate_grid_button;
 
-var webcam_enabled = false;
+var generate_grid_dialog;
 
 function Timeline()
 {
@@ -295,76 +293,209 @@ function LoadGridButton()
     this.setup();
 }
 
-function LoadFaceButton()
-{
-    var element = document.getElementById('load-face-input');
-    var button = this;
-    
-    this.on_change = function(e)
-    {   // From: https://stackoverflow.com/questions/12368910/html-display-image-after-selecting-filename
-        
-        let selected_file = e.target.files[0];
+function GenerateGridDialog()
+{   
+    var OFF = 0; 
+    var LIVE = 1;
+    var SNAP = 2;
 
-        if(allowed_file(selected_file.name))
-        {
-            let file_reader = new FileReader();
-            generate_grid_button.set_input_image(selected_file);
+    var _gen_grid_dialog = this;
+    this.webcam_status  = OFF; 
+    this.file_select = new GenerateGridFileSelect();
+    this.upload_button = new GenerateGridButton();
 
-            file_reader.onload = function(e)
-            {
-                //animation.data.add_grid_image(e.target.result, 7, 7, selected_file.name, true);
-        
-                let blob = dataURItoBlob(e.target.result);
-                let image_to_upload = URL.createObjectURL(blob);
-                //console.log(blob);
-                set_input_image(image_to_upload);
-                get_id('gen-face-image-text-state').innerText = 'Using Image File';
-            }
-            
-            file_reader.readAsDataURL(selected_file);
-        }
-    }
+    this.image_to_upload_file = null;
+    this.image_to_upload_preview;
 
-    LoadFaceButton.prototype.setup = function ()
-    {   
-        element.onchange = this.on_change;
-    }
+    this.locked = false;
+    this.visible;
 
-    this.setup();
-}
-
-function GenerateGridButton()
-{   // Load Path
-    var element = document.getElementById('generate-grid-button');
-    var button = this;
-    this.stored_imagefile;
-
-    this.on_click = function(e)
-    {   console.log(button.stored_imagefile);
-        if(button.stored_imagefile != null)
-        {   
-            requests.request_grid(button.stored_imagefile);
-        }
-    }
-
-    GenerateGridButton.prototype.setup = function ()
-    {   
-        element.onclick = this.on_click;
-    }
-
-    GenerateGridButton.prototype.set_input_image = function(file)
-    {   //console.log(file);
-        this.stored_imagefile = file;
-    }
-
-    GenerateGridButton.prototype.clear_input_image = function()
+    GenerateGridDialog.prototype.update_status = function(message)
     {
-        this.stored_imagefile = null;
+        if(message != "" && message != null)
+        {   get_id('gen-grid-button-status').innerText = message;
+        }
+        else
+        {   get_id('gen-grid-button-status').innerText = "Upload your face!";
+        } 
+    }
+
+    /*
+    GenerateGridDialog.prototype.update_status = function()
+    {
+        get_id('gen-grid-button-status').innerText = "Upload your face!";
+    }*/
+
+    GenerateGridDialog.prototype.setup = function()
+    {
+        get_id('gen-grid-opendiag-button').onclick = function(event)
+        {   _gen_grid_dialog.open();
+        }
+        
+        get_id('gen-grid-close-diag-button').onclick = function(event)
+        {   
+            _gen_grid_dialog.close();
+            event.stopPropagation();
+        }
+    }
+
+    GenerateGridDialog.prototype.open = function()
+    {
+        get_id('gen-grid-diag').classList.remove("hide");
+        get_id('gen-grid-diag').classList.add("show");
+    }
+
+    GenerateGridDialog.prototype.close = function()
+    {
+        get_id('gen-grid-diag').classList.remove("show");
+        get_id('gen-grid-diag').classList.add("hide");
+    }
+
+    GenerateGridDialog.prototype.set_image_preview = function(image_url)
+    {   //console.log("setting input image");
+        get_id('gen-grid-upload-preview').style.backgroundImage = 'url('+image_url+')';
+        this.webcam_hide();
+    }
+
+    GenerateGridDialog.prototype.set_image_to_upload = function(file)
+    {   this.image_to_upload_file = file;
+    }
+
+    // WEBCAM
+    GenerateGridDialog.prototype.webcam_snap = function()
+    {   Webcam.snap( function(data_uri) {
+            
+            _gen_grid_dialog.webcam_status = SNAP;
+            get_id('gen-grid-webcam-button-text').innerText = 'Another Photo!';
+
+            let blob = dataURItoBlob(data_uri);
+            let webcam_image_preview = URL.createObjectURL(blob);
+            
+            // Get DataURI image format
+            let semicolon = data_uri.indexOf(";");
+            let fslash = data_uri.indexOf("/");
+            let format = data_uri.substring(fslash+1,semicolon);
+
+            let date = new Date();
+            let webcam_image_file = blobToFile(blob, "webcam_" +date.getTime()+ "."+format);
+            
+            if(allowed_file(webcam_image_file.name))
+            {
+                _gen_grid_dialog.set_image_to_upload(webcam_image_file); 
+                _gen_grid_dialog.set_image_preview(webcam_image_preview);    
+                _gen_grid_dialog.webcam_hide();
+            }
+        } );
+    }
+
+    GenerateGridDialog.prototype.webcam_hide = function()
+    {   get_id('gen-grid-webcam-disp').style.display = 'none';
+        this.webcam_status = SNAP;
+    }
+
+    GenerateGridDialog.prototype.webcam_show = function()
+    {   if(this.webcam_status == OFF || this.webcam_status == SNAP)
+        {   this.setup_webcam();
+            this.webcam_status = LIVE;
+        }
+        get_id('gen-grid-webcam-button-text').innerText = 'Take Photo!';
+        get_id('gen-grid-webcam-disp').style.display = 'block';
+    }
+
+    GenerateGridDialog.prototype.webcam_click = function()
+    {   if(this.webcam_status == OFF)
+        {   this.webcam_show();
+        }
+        else if(this.webcam_status == LIVE)
+        {
+            this.webcam_snap();
+        }
+        else if(this.webcam_status == SNAP)
+        { 
+            this.webcam_show();
+        }
+    }
+
+    // WEBCAM
+    GenerateGridDialog.prototype.setup_webcam = function()
+    {
+        Webcam.set({
+            // live preview size
+			width: 274,
+			height: 206,
+			
+			// device capture size
+			dest_width: 320,
+			dest_height: 240,
+			
+			// format and quality
+			image_format: 'jpeg',
+			jpeg_quality: 90
+        });
+        Webcam.attach( '#gen-grid-webcam-disp' );
+    }
+
+    // FILE SELECT
+    function GenerateGridFileSelect()
+    {
+        this.element = document.getElementById('gen-grid-fileselect-input');
+        var _gen_grid_file_select = this;
+        
+        this.on_change = function(e)
+        {   // From: https://stackoverflow.com/questions/12368910/html-display-image-after-selecting-filename
+            
+
+            let selected_file = e.target.files[0];
+    
+            if(selected_file != null && allowed_file(selected_file.name))
+            {
+                let file_reader = new FileReader();
+
+                _gen_grid_dialog.set_image_to_upload(selected_file);
+    
+                file_reader.onload = function(e)
+                {
+                    let blob = dataURItoBlob(e.target.result);
+                    let selected_image_preview = URL.createObjectURL(blob);
+                    // Set image preview
+                    _gen_grid_dialog.set_image_preview(selected_image_preview);
+                }
+                
+                file_reader.readAsDataURL(selected_file);
+            }
+        }
+    
+        GenerateGridFileSelect.prototype.setup = function ()
+        {   
+            this.element.onchange = this.on_change;
+        }
+    
+        this.setup();
+    }
+
+    function GenerateGridButton()
+    {   // Load Path
+        this.element = document.getElementById('gen-upload-button');
+        var _gen_grid_button = this;
+    
+        this.on_click = function(e)
+        {   if(_gen_grid_dialog.image_to_upload_file != null)
+            {   
+                requests.request_grid(_gen_grid_dialog.image_to_upload_file);
+                _gen_grid_dialog.close();
+                e.stopPropagation();
+            }
+        }
+    
+        GenerateGridButton.prototype.setup = function()
+        {   this.element.onclick = this.on_click;
+        }
+
+        this.setup();
     }
 
     this.setup();
 }
-
 
 function setup_ui()
 {   // Prevent middle click pan from messing up window
@@ -387,14 +518,6 @@ function setup_ui()
     {   grid_close_menus();
         get_id('anim-grid-size-container').style.display = 'block';
     };
-
-    get_id('generate-face-button').onclick = function(event)
-    {   get_id('gen-face-diag').style.display = 'block';
-    }
-
-    get_id('gen-face-diag').onmouseleave = function(event)
-    {   get_id('gen-face-diag').style.display = 'none';
-    }
 
     get_id('anim-grid-hface-container').onmouseleave = function(event)
     {  grid_close_menus();
@@ -435,15 +558,13 @@ function setup_ui()
     load_grid_button = new LoadGridButton();
     timeline = new Timeline();
 
-    load_face_button = new LoadFaceButton();
-
     next_path_button = new NextPathButton();
     prev_path_button = new PrevPathButton();
     clear_path_button = new ClearPathButton();
     prev_grid_button = new PrevGridButton();
     prev_next_button = new NextGridButton();
 
-    generate_grid_button = new GenerateGridButton();
+    generate_grid_dialog = new GenerateGridDialog();
 }
 
 function grid_haxis_selected(face)
@@ -467,72 +588,5 @@ function grid_close_menus()
     get_id('anim-grid-size-container').style.display = 'none';
 }
 
-function set_input_image(image_url)
-{
-    get_id('gen-face-upload-disp').style.backgroundImage = 'url('+image_url+')';
-    get_id('gen-face-image-text-def').style.display = 'none';
-    get_id('gen-face-image-text-state').style.display = 'block';
-}
 
-function webcam_hide()
-{   get_id('gen-face-webcam-disp').style.display = 'none';
-    get_id('gen-face-webcam-text').style.display = 'block';
-}
 
-function webcam_show()
-{   if(!webcam_enabled)
-    {   webcam_enabled = true;
-        setup_webcam();
-    }
-    get_id('gen-face-webcam-flash').style.display= 'block';
-    get_id('gen-face-webcam-disp').style.display = 'block';
-    get_id('gen-face-webcam-text').style.display = 'none';
-}
-
-function webcam_snap()
-{   Webcam.snap( function(data_uri) {
-        //console.log(data_uri);
-        //document.getElementById('my_result').innerHTML = '<img src="'+data_uri+'"/>';
-        
-        let blob = dataURItoBlob(data_uri);
-        let image_to_upload = URL.createObjectURL(blob);
-
-        // Get DataURI image format
-        let semicolon = data_uri.indexOf(";");
-        let fslash = data_uri.indexOf("/");
-        let format = data_uri.substring(fslash+1,semicolon);
-
-        let webcam_image = blobToFile(blob, "webcam."+format);
-        
-        if(allowed_file(webcam_image.name))
-        {
-            generate_grid_button.set_input_image(webcam_image);    
-            get_id('gen-face-image-text-state').innerText = 'Using Webcam';
-            set_input_image(image_to_upload);
-            //console.log(image_to_upload);        
-        }
-    } );
-}
-
-function webcam_click()
-{   if(webcam_enabled)
-    {   webcam_snap();
-    }
-    webcam_show();
-}
-
-// WEBCAM
-function setup_webcam()
-{
-    Webcam.set({
-        width: 144,
-        height: 108,
-        dest_width: 640,
-        dest_height: 480,
-        crop_width: 480,
-        crop_height: 480,
-        image_format: 'jpeg',
-        jpeg_quality: 90
-    });
-    Webcam.attach( '#gen-face-webcam-disp' );
-}

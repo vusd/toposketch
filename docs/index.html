@@ -61,36 +61,38 @@
                 
                 <div class='twelve columns toolbar' style="background-color:none;">
                 
-                <button title='Generate Face' id='generate-face-button' class='tool-button left' style="z-index:10;">
-                    :) 
-                    <div id='gen-face-diag' class='tool-button-diag'>
+                <button title='Upload your face!' id='gen-grid-opendiag-button' class='tool-button left' style="z-index:10;">
+                    <div>
+                        <p id='gen-grid-button-status' >Upload your face!</p>
+                        <!--<img src="./imgs/icons/ic_grid_left_24px.svg">-->
+                    </div>
+                    <div id='gen-grid-diag' class='tool-button-diag'>
                         
-                        
-                        <div title='Take a photo' id='gen-face-webcam-button' class='gen-face-button gen-face-image-slot' onclick="webcam_click();">
-                            
-                            <p id='gen-face-webcam-text'>Allow Webcam</p>
-                            <div id='gen-face-webcam-disp'></div>
-                            <div id='gen-face-webcam-flash'></div>
+                        <div id='gen-grid-upload-preview'>
+                            <div id='gen-grid-webcam-disp'></div>
                         </div>
-
-                        <div id='gen-face-upload-button' class='gen-face-button gen-face-image-slot'>
-                            <div id='gen-face-upload-disp'></div>
-
-                            
-
-                            <p id='gen-face-image-text-def'>No Image 
-                                Uploaded</p>
-                            <p id='gen-face-image-text-state'>
+                        
+                        <div title='Use Webcam' id='gen-grid-webcam-button' class='tool-button gen-grid-button' onclick="generate_grid_dialog.webcam_click()">
+                            <p id="gen-grid-webcam-button-text">
+                                Use Webcam
                             </p>
+                        </div>
 
-                            <input id='load-face-input' class='file-input-container' type='file'>
-                                    
-                        </div>
+                        <div title='Select File' id='gen-grid-fileselect-button' class='tool-button gen-grid-button'>
+                                <p>
+                                    Select File
+                                </p>
+                                <input id='gen-grid-fileselect-input' class='file-input-container' type='file'>
+                            </div>
                             
-                            
-                        <div id='generate-grid-button' class='gen-face-button'>
-                            <p>OK!</p>
+                        <div id='gen-upload-button' class='tool-button gen-grid-button'>
+                            <p>Upload Face & Generate Grid!</p>
                         </div>
+                        
+                        <div id='gen-grid-close-diag-button' class='tool-button'>
+                        <img src="./imgs/icons/ic_close_black_24px.svg">
+                        <div>
+                        
 
                     </div>
                 </button>
