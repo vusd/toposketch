@@ -61,7 +61,7 @@
                 
                 <div class='twelve columns toolbar' style="background-color:none;">
                 
-                <button title='Upload your face!' id='gen-grid-opendiag-button' class='tool-button left hide' style="z-index:10;">
+                <div title='Upload your face!' id='gen-grid-opendiag-button' class='tool-button left hide' style="z-index:10;">
                     <div>
                         <p id='gen-grid-button-status' >Upload your face!</p>
                         <!--<img src="./imgs/icons/ic_grid_left_24px.svg">-->
@@ -90,33 +90,32 @@
                         </div>
                         
                         <div id='gen-grid-close-diag-button' class='tool-button'>
-                        <img src="./imgs/icons/ic_close_black_24px.svg">
-                        <div>
+                        <img alt="Close dialog box" src="./imgs/icons/ic_close_black_24px.svg">
+                        </div>
                         
-
                     </div>
-                </button>
+                </div>
 
                 <button title='Previous grid' id ='prev-grid-button' class='tool-button left'>
-                    <img src="./imgs/icons/ic_grid_left_24px.svg"> </button>
+                    <img alt="Previous Grid" src="./imgs/icons/ic_grid_left_24px.svg"> </button>
             
                 <button title='Next grid' id='next-grid-button' class='tool-button left'>
-                <img src="./imgs/icons/ic_grid_right_24px.svg"> </button>
+                <img alt="Next Grid" src="./imgs/icons/ic_grid_right_24px.svg"> </button>
 
                 <div class='tool-divider left'></div>
 
                 <!-- File inputs are notorious to style, so this is a workaround-->
 
                 <button title='Previous example path' id='prev-path-button' class='tool-button left'>
-                    <img src='imgs/icons/ic_prev_path_24px.svg'>
+                    <img alt="Previous Path" src='imgs/icons/ic_prev_path_24px.svg'>
                 </button>
 
                 <button title='Next example path' id='next-path-button' class='tool-button left'>
-                    <img src='imgs/icons/ic_next_path_24px.svg'>
+                    <img alt="Next Path" src='imgs/icons/ic_next_path_24px.svg'>
                 </button>
 
                 <button title='Clear path' id='clear-button' class='tool-button left'>
-                    <img src='./imgs/icons/ic_clear_path_24px.svg'>
+                    <img alt="Clear Path" src='./imgs/icons/ic_clear_path_24px.svg'>
                 </button>
                 
                 <!-- Extra option and render -->
@@ -127,7 +126,7 @@
 
                 <div class='dropdown right'>
                     <button class='tool-button'>
-                        <img src ='./imgs/icons/ic_more_horiz_black_24px.svg'>
+                        <img alt="More Options" src ='./imgs/icons/ic_more_horiz_black_24px.svg'>
                     </button>
                     <div class='dropdown-list dropdown-right'>
 
@@ -239,7 +238,7 @@
             <div class='twelve columns toolbar' id='play-toolbar' style='margin-bottom:2em;'>
                 <div id='play-button-container'>
                     <button id='play-button' class='tool-button'>
-                        <img id='play-button-icon' src="./imgs/icons/ic_play_arrow_black_24px.svg">
+                        <img alt="Play" id='play-button-icon' src="./imgs/icons/ic_play_arrow_black_24px.svg">
                     </button>
                 </div>
                 <div id='timeline-container'>
@@ -266,12 +265,12 @@
                 TopoSketch is a tool for prototyping facial animations by sketching gestures. Posing and animating a believable face is a complex process, requiring many different features to work in tandem (eg: the eyes narrowing during a smile). Using neural networks, TopoSketch creates a high level expression based control that simplies this process. Drawn gestures are then used to control the blending and timing between different expressions to create an animation. 
             </p>-->
 
-            <div class='video-container' class='twelve columns'>
+            <div class='video-container twelve columns'>
                 <iframe src="https://www.youtube.com/embed/lNjXbKNhtGA?rel=0&amp;showinfo=0&amp;enablejsapi=1" frameborder="0" allowfullscreen></iframe>
             </div>
 
             <div class='footer'>
-            <a href="https://docs.google.com/presentation/d/11ia5Zeg7AiiIi5y10S6z5SQci3ASgJW6cbKwvQAAv1E/edit?usp=sharing">(slides)<a>
+            <a href="https://docs.google.com/presentation/d/11ia5Zeg7AiiIi5y10S6z5SQci3ASgJW6cbKwvQAAv1E/edit?usp=sharing">(slides)</a>
             </div>
 
         </div>
