@@ -2,6 +2,11 @@
 function RequestManager()
 {
     this.requests = new Array();
+    //this.server_url = 'http://toposketch.vusd.nz/grids';
+    //this.server_url = 'http://127.0.0.1:5000/grids';
+    this.server_url = '/grids';
+    this.test_url = './js/server_up.json';
+    //this.test_url = 'http://toposketch.vusd.nz/js/server_up.json';
 
     RequestManager.prototype.update_requests = function()
     {
@@ -24,21 +29,44 @@ function RequestManager()
         new_request.upload_image(image_file);
         this.requests.push(new_request);
     }
+
+    RequestManager.prototype.if_server_online = function(callback)
+    {   let check_request = new XMLHttpRequest();
+
+        check_request.onreadystatechange = function()
+        {
+            if(check_request.readyState == XMLHttpRequest.DONE && check_request.status == 200)
+            {
+                let response_json = JSON.parse(check_request.response);
+                console.log('Server says hello!');
+                callback(true);
+            }
+            else if(check_request.readyState == XMLHttpRequest.DONE && check_request.status != 200)
+            {
+                callback(false);
+                console.log('Server says goodbye!');
+            }
+            else
+            {
+            }
+        }
+
+        console.log('Checking if server available...');
+        check_request.open("GET", this.test_url);
+        check_request.send();
+    }
 }
 
 function Request()
 {
     this.uuid = '';
-    //this.server_url = 'http://54.89.204.0:8889/grids';
-    this.server_url = 'http://127.0.0.1:5000/grids';
-    //this.server_url = '/grids';
     this.image_response;
     this.done = false;
 
     this.poll_start = Date.now();
     this.last_polltime = 0;
-    this.poll_interval = 2000; // in milliseconds 
-    this.poll_timeout = 15000; // in milliseconds
+    this.poll_interval = 5000; // in milliseconds 
+    this.poll_timeout = 60000; // in milliseconds
 
     var _request = this;
 
@@ -105,7 +133,7 @@ function Request()
             console.log("Sending file to server via POST...");
             
             generate_grid_dialog.update_status("Uploading Image...");
-            request.open("POST", this.server_url);
+            request.open("POST", requests.server_url);
             request.send(data);
         }
         else
@@ -125,8 +153,9 @@ function Request()
                 if(request.readyState == XMLHttpRequest.DONE && request.status == 200)
                 {
                     response = request.response;
-                    _request.image_response = response;
+                    _request.image_response = request.responseURL;
                     console.log("Got grid back from server");
+                    console.log(_request.image_response);
                     generate_grid_dialog.update_status("Grid Generated!");
                     //console.log(this.image_response);
                     
@@ -142,7 +171,7 @@ function Request()
                     console.log(request.status);
                 }
             }
-            request.open("GET", this.server_url + "?" + params);
+            request.open("GET", requests.server_url + "?" + params);
             generate_grid_dialog.update_status("Generating Grid...");
             request.send();
         }

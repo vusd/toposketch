@@ -320,12 +320,19 @@ function GenerateGridDialog()
         } 
     }
 
-    /*
-    GenerateGridDialog.prototype.update_status = function()
-    {
-        get_id('gen-grid-button-status').innerText = "Upload your face!";
-    }*/
+    GenerateGridDialog.prototype.set_visibility = function()
+    {   
+        let enable_diag = function(server_online)
+        {
+            if(server_online)
+            {
+                get_id('gen-grid-opendiag-button').classList.remove('hide');
+            }
+        }
+        requests.if_server_online(enable_diag);
+    } 
 
+    
     GenerateGridDialog.prototype.setup = function()
     {
         get_id('gen-grid-opendiag-button').onclick = function(event)
@@ -337,6 +344,7 @@ function GenerateGridDialog()
             _gen_grid_dialog.close();
             event.stopPropagation();
         }
+        this.set_visibility();
     }
 
     GenerateGridDialog.prototype.open = function()
