@@ -1,12 +1,11 @@
-
 function RequestManager()
 {
     this.requests = new Array();
     //this.server_url = 'http://toposketch.vusd.nz/grids';
     //this.server_url = 'http://127.0.0.1:5000/grids';
-    this.server_url = '/grids';
-    this.test_url = './js/server_up.json';
-    //this.test_url = 'http://toposketch.vusd.nz/js/server_up.json';
+    this.server_url = 'http://toposketch.vusd.nz/grids';
+    //this.test_url = './js/server_up.json';
+    this.test_url = 'http://toposketch.vusd.nz/js/server_up.json';
 
     RequestManager.prototype.update_requests = function()
     {
