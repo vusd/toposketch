@@ -310,13 +310,31 @@ function GenerateGridDialog()
     this.locked = false;
     this.visible;
 
-    GenerateGridDialog.prototype.update_status = function(message)
+    //this.status_message = "";
+    this.status_message_def = "Upload your face!"
+    this.status_message_start = Date.now();
+    this.status_message_time  = -1; 
+
+    GenerateGridDialog.prototype.update = function()
+    {   
+        if(this.status_message_time != -1)
+        {
+            if(Date.now() - this.status_message_start > this.status_message_time)
+            {   get_id('gen-grid-button-status').innerText = this.status_message_def;
+            }
+        }
+    }
+
+    GenerateGridDialog.prototype.update_status = function(message, timefor)
     {
         if(message != "" && message != null)
-        {   get_id('gen-grid-button-status').innerText = message;
+        {   this.status_message_start = Date.now();
+            this.status_message_time  = timefor; 
+            get_id('gen-grid-button-status').innerText = message;
         }
         else
-        {   get_id('gen-grid-button-status').innerText = "Upload your face!";
+        {   this.status_message_time  = -1; 
+            get_id('gen-grid-button-status').innerText = this.status_message_def;
         } 
     }
 
@@ -332,11 +350,21 @@ function GenerateGridDialog()
         requests.if_server_online(enable_diag);
     } 
 
+    GenerateGridDialog.prototype.lock = function()
+    {   this.locked = true;
+    }
     
+    GenerateGridDialog.prototype.unlock = function()
+    {   this.locked = false;
+    }
+
     GenerateGridDialog.prototype.setup = function()
     {
         get_id('gen-grid-opendiag-button').onclick = function(event)
-        {   _gen_grid_dialog.open();
+        {   if(!_gen_grid_dialog.locked)
+            { 
+                _gen_grid_dialog.open();
+            }
         }
         
         get_id('gen-grid-close-diag-button').onclick = function(event)
@@ -491,6 +519,7 @@ function GenerateGridDialog()
             {   
                 requests.request_grid(_gen_grid_dialog.image_to_upload_file);
                 _gen_grid_dialog.close();
+                //_gen_grid_dialog.lock();
                 e.stopPropagation();
             }
         }
@@ -503,6 +532,11 @@ function GenerateGridDialog()
     }
 
     this.setup();
+}
+
+function update_ui()
+{
+    generate_grid_dialog.update();
 }
 
 function setup_ui()

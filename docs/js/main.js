@@ -69,6 +69,8 @@ function loop()
 
     requests.update_requests();
 
+    update_ui();
+
     calculate_fps();
     get_id('fps').innerText = fps + ' FPS'
     

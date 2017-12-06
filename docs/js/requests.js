@@ -8,7 +8,10 @@ function RequestManager()
     this.test_url = 'http://toposketch.vusd.nz/js/server_up.json';
 
     RequestManager.prototype.update_requests = function()
-    {
+    {   
+
+        console.log(this.requests.length);
+
         for(var r=0; r<this.requests.length; r++)
         {   let current_request = this.requests[r];
 
@@ -19,6 +22,15 @@ function RequestManager()
                 this.requests.splice(r, 1);
                 console.log("Request closed!");
             }
+        }
+
+        if(this.requests.length == 0)
+        {   generate_grid_dialog.unlock();
+            console.log("!!!");
+        }
+        else
+        {   generate_grid_dialog.lock();
+            console.log(":(");
         }
     }
 
@@ -87,7 +99,6 @@ function Request()
 
     Request.prototype.close = function()
     {   console.log("Request closing...")
-        generate_grid_dialog.update_status("");
         this.done = true;
     }
 
@@ -118,25 +129,31 @@ function Request()
                 {
                     response = JSON.parse(request.response);
                     _request.uuid = response.uuid;
-                    generate_grid_dialog.update_status("Image Uploaded!");
+                    generate_grid_dialog.update_status("Image Uploaded!",-1);
                     console.log("File received by server and assigned UUID of " + this.uuid);
+                    _request.request_grid();
                 }
-                else 
+                else if(request.readyState == XMLHttpRequest.LOADING && request.status == 200) 
                 {
-                    console.log("Uh oh! " + request.status)
-                    generate_grid_dialog.update_status("Upload Failed!");
+                    console.log("Uploading Image!")
+                    generate_grid_dialog.update_status("Uploading Image...",-1);
+                }
+                else if(request.readyState == XMLHttpRequest.DONE && request.status != 200) 
+                {   console.log("Upload Failed: " + request.status)
+                    generate_grid_dialog.update_status("Upload Failed!",3000);
+                    _request.close();
                 }
             }
 
             //===== Sending Request =====//
             console.log("Sending file to server via POST...");
-            
-            generate_grid_dialog.update_status("Uploading Image...");
             request.open("POST", requests.server_url);
             request.send(data);
         }
         else
         {   console.log("File not allowed (wrong file format?)");
+            generate_grid_dialog.update_status("Wrong File Format", 3000);
+            _request.close();
         }
     }
 
@@ -155,7 +172,7 @@ function Request()
                     _request.image_response = request.responseURL;
                     console.log("Got grid back from server");
                     console.log(_request.image_response);
-                    generate_grid_dialog.update_status("Grid Generated!");
+                    generate_grid_dialog.update_status("Grid Generated!",3000);
                     //console.log(this.image_response);
                     
                     //let grid_blob = dataURItoBlob(this.image_response);
@@ -165,13 +182,14 @@ function Request()
 
                     _request.close();
                 }
-                else 
-                {
+                else if(request.readyState == XMLHttpRequest.DONE && request.status != 200)
+                {   generate_grid_dialog.update_status("Grid Generation Failed!",3000);
                     console.log(request.status);
+                    _request.close();
                 }
             }
             request.open("GET", requests.server_url + "?" + params);
-            generate_grid_dialog.update_status("Generating Grid...");
+            generate_grid_dialog.update_status("Generating Grid...",-1);
             request.send();
         }
     }

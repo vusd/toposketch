@@ -91,7 +91,8 @@ function blobToFile(theBlob, fileName){
 }
 
 function allowed_file(filename)
-{   let allowed_extensions = ['.png','.jpeg','.jpg','.bmp'];
+{   let allowed_extensions = ['.png','.jpeg','.jpg'];
+    //let allowed_extensions = ['.png','.jpeg','.jpg','.bmp'];
     let extension = filename.substring(
                         filename.lastIndexOf('.') == -1 ? filename.length: filename.lastIndexOf('.'),
                         filename.length).toLowerCase();
