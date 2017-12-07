@@ -11,8 +11,13 @@
     <script>
         var uuid = '';
         var response;
-        var server_url = server_url = "/grids";
+        //var server_url = server_url = "/grids";
+        var server_url = "http://127.0.0.1:5000/grids";
 
+        var post_start = 0;
+        var post_poll_interval = 3000;
+        var post_timeout = 60000;
+        
         function RequestGrid()
         {   
             if(uuid)
@@ -30,12 +35,24 @@
                         document.getElementById("result-image").src = image_src;
                         //uuid = response.uuid;
                     }
+                    else if(request.readyState == XMLHttpRequest.DONE && request.status != 200)
+                    {   console.log("Grid Request Failed.. Trying Again.");
+                        if(Date.now() - post_start < post_timeout)
+                        {   
+                            setTimeout(function(){ RequestGrid(); }, post_poll_interval);
+                        }
+                        else
+                        {
+                            console.log("Timeout!");
+                        }
+                    }
                     else 
                     {
                         console.log(request.status);
                     }
                 }
 
+                console.log("Sending request for grid...");
                 request.open("GET", server_url + "?" + params);
                 request.send();
             }
@@ -91,7 +108,7 @@
     </div>
 
     <div>
-        <button onclick="RequestGrid()">Request Grid!</button>
+        <button onclick="post_start=Date.now();RequestGrid();">Request Grid!</button>
     </div>
 
     <img id="result-image" src="">

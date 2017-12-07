@@ -363,7 +363,7 @@ html, body
 }
 
 #gen-grid-upload-preview
-{   background-image: none;
+{   background-image: url("../imgs/icons/image_preview_def.png");
     background-size: 274px auto;
     background-position: center;
     background-color: rgba(0,0,0,0.1);
