@@ -134,7 +134,14 @@ function Renderer()
     {   // This method is continuously called until rendering is complete
         
         if(frame < this.animation_data.path.length)
-        {   this.update_status('Rendered ' + frame + ' / ' + (this.animation_data.path.length-1));
+        {   if(frame == 0)
+            {   this.update_status('Preparing render' + dotdotdot);
+            }
+            else
+            {   this.update_status('Rendered ' + frame + ' / ' + (this.animation_data.path.length-1));   
+            }
+
+            
             // If the frame to render is less than path length
             let current_pos = this.animation_data.path[frame];
             let grid_pos = this.animation_data.get_grid_position(current_pos.x, current_pos.y);

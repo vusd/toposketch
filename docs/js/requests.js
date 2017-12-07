@@ -2,21 +2,25 @@ function RequestManager()
 {
     this.requests = new Array();
     //this.server_url = 'http://toposketch.vusd.nz/grids';
-    //this.server_url = 'http://127.0.0.1:5000/grids';
-    this.server_url = 'http://toposketch.vusd.nz/grids';
+    this.server_url = 'http://127.0.0.1:5000/grids';
+    //this.server_url = 'http://toposketch.vusd.nz/grids';
     //this.test_url = './js/server_up.json';
     this.test_url = 'http://toposketch.vusd.nz/js/server_up.json';
 
+    RequestManager.prototype.kill_all = function()
+    {
+        for(var r=0; r<this.requests.length; r++)
+        {   let current_request = this.requests[r];
+            current_request.close();
+        }
+    }
+
     RequestManager.prototype.update_requests = function()
     {   
-
-        console.log(this.requests.length);
-
         for(var r=0; r<this.requests.length; r++)
         {   let current_request = this.requests[r];
 
             current_request.update();
-
             if(current_request.done)
             {   
                 this.requests.splice(r, 1);
@@ -26,11 +30,9 @@ function RequestManager()
 
         if(this.requests.length == 0)
         {   generate_grid_dialog.unlock();
-            console.log("!!!");
         }
         else
         {   generate_grid_dialog.lock();
-            console.log(":(");
         }
     }
 
@@ -76,10 +78,14 @@ function Request()
 
     this.poll_start = Date.now();
     this.last_polltime = 0;
-    this.poll_interval = 5000; // in milliseconds 
-    this.poll_timeout = 60000; // in milliseconds
+    this.poll_interval = 2000; // in milliseconds 
+    this.poll_timeout = 600000; // in milliseconds
+
+    this.post_request_sent = false;
+    this.dynamic_status = false; // When this is true, the status of the dialog box button will be overriden with a dynamic message (hacky but works).
 
     var _request = this;
+
 
     Request.prototype.update = function()
     {
@@ -87,13 +93,24 @@ function Request()
         {
             console.log("Request polling...");
             this.last_polltime = Date.now();
-            this.request_grid();
+            console.log(this.post_request_sent);
+            if(!this.post_request_sent)
+            {   
+                this.request_grid();
+            }
         }
 
         if(Date.now() - this.poll_start >= this.poll_timeout)
         {   
-            console.log("Request timed out after " + this.poll_timeout +" ms");
+            console.log("Request timed out after " + (this.poll_timeout/1000.0) +" seconds");
+            this.dynamic_status=false;
+            generate_grid_dialog.update_status("Request timed out!", 2000);
             this.close();
+        }
+
+        if(this.dynamic_status)
+        {
+            generate_grid_dialog.update_status("Generating Grid" + dotdotdot + " (Click to cancel)", 1000);
         }
     }
 
@@ -136,7 +153,7 @@ function Request()
                 else if(request.readyState == XMLHttpRequest.LOADING && request.status == 200) 
                 {
                     console.log("Uploading Image!")
-                    generate_grid_dialog.update_status("Uploading Image...",-1);
+                    generate_grid_dialog.update_status("Uploading Image... (Click to Cancel)",-1);
                 }
                 else if(request.readyState == XMLHttpRequest.DONE && request.status != 200) 
                 {   console.log("Upload Failed: " + request.status)
@@ -164,7 +181,7 @@ function Request()
             let request = new XMLHttpRequest(); // This is the GET request sent to server
             let params = "uuid="+this.uuid;
 
-             request.onreadystatechange = function()
+            request.onreadystatechange = function()
             {   // If the request is complete and has an OK status
                 if(request.readyState == XMLHttpRequest.DONE && request.status == 200)
                 {
@@ -172,6 +189,9 @@ function Request()
                     _request.image_response = request.responseURL;
                     console.log("Got grid back from server");
                     console.log(_request.image_response);
+
+                    this.dynamic_status = false;
+
                     generate_grid_dialog.update_status("Grid Generated!",3000);
                     //console.log(this.image_response);
                     
@@ -179,18 +199,19 @@ function Request()
                     //let blob_url = 'url('+grid_blob+')'
                     //console.log(blob_url);
                     animation.data.add_grid_image(_request.image_response, 7, 7, "uploaded", true);
-
                     _request.close();
                 }
                 else if(request.readyState == XMLHttpRequest.DONE && request.status != 200)
-                {   generate_grid_dialog.update_status("Grid Generation Failed!",3000);
-                    console.log(request.status);
-                    _request.close();
+                {   //generate_grid_dialog.update_status("Grid Gen Failed!",5000);
+                    _request.post_request_sent = false;
+                    this.dynamic_status = false;
                 }
             }
             request.open("GET", requests.server_url + "?" + params);
-            generate_grid_dialog.update_status("Generating Grid...",-1);
+            //generate_grid_dialog.update_status("Generating Grid... (Click to Cancel)",-1);
             request.send();
+            this.dynamic_status = true;
+            this.post_request_sent = true;
         }
     }
 

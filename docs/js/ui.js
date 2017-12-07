@@ -10,6 +10,7 @@ var prev_path_button;
 var clear_path_button;
 var prev_grid_button;
 var prev_next_button;
+var dotdotdot = "...";
 
 var generate_grid_dialog;
 
@@ -301,6 +302,8 @@ function GenerateGridDialog()
 
     var _gen_grid_dialog = this;
     this.webcam_status  = OFF; 
+    this.webcam_enabled = false;
+
     this.file_select = new GenerateGridFileSelect();
     this.upload_button = new GenerateGridButton();
 
@@ -364,6 +367,11 @@ function GenerateGridDialog()
         {   if(!_gen_grid_dialog.locked)
             { 
                 _gen_grid_dialog.open();
+            }
+            else if(_gen_grid_dialog.locked)
+            {
+                requests.kill_all();
+                generate_grid_dialog.update_status("", -1);
             }
         }
         
@@ -439,16 +447,24 @@ function GenerateGridDialog()
     }
 
     GenerateGridDialog.prototype.webcam_click = function()
-    {   if(this.webcam_status == OFF)
-        {   this.webcam_show();
-        }
-        else if(this.webcam_status == LIVE)
+    {   
+        if(this.webcam_enabled)
         {
-            this.webcam_snap();
+            if(this.webcam_status == OFF)
+            {   this.webcam_show();
+            }
+            else if(this.webcam_status == LIVE)
+            {
+                this.webcam_snap();
+            }
+            else if(this.webcam_status == SNAP)
+            { 
+                this.webcam_show();
+            }
         }
-        else if(this.webcam_status == SNAP)
-        { 
-            this.webcam_show();
+        else
+        {
+            get_id('gen-grid-webcam-button-text').innerText = "Coming Soon!";
         }
     }
 
@@ -518,6 +534,7 @@ function GenerateGridDialog()
         {   if(_gen_grid_dialog.image_to_upload_file != null)
             {   
                 requests.request_grid(_gen_grid_dialog.image_to_upload_file);
+                log_event('Upload', 'Image');
                 _gen_grid_dialog.close();
                 //_gen_grid_dialog.lock();
                 e.stopPropagation();
@@ -537,6 +554,14 @@ function GenerateGridDialog()
 function update_ui()
 {
     generate_grid_dialog.update();
+    update_dotdotdot();
+}
+
+function update_dotdotdot()
+{   let dots = parseInt(Date.now()/500%5);
+    dotdotdot = Array(dots).join(".");
+    let spaces = Array(3-dotdotdot.length+1).join(" ");
+    dotdotdot = dotdotdot + spaces;
 }
 
 function setup_ui()

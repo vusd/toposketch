@@ -264,6 +264,22 @@ html, body
     box-shadow: 0px 3px 5px rgba(0,0,0,0.6);
 }
 
+.tool-button-disabled
+{   background-color: #DDD !important;
+    border: 1px solid #FFF;
+    box-shadow: none;
+    opacity:1;
+}
+
+.tool-button-disabled:active
+{   box-shadow: none;
+    background-color: #DDD !important;
+}
+
+.tool-button-disabled p
+{   color: #bAbAbA;
+}
+
 /* Upload face button & dialog box*/
 
 #gen-grid-close-diag-button
@@ -296,12 +312,12 @@ html, body
 #gen-grid-opendiag-button
 {   padding-left:6px;
     padding-right:6px;
-    width:145px;
+    max-width:270px;
     text-align: center;
 }
 
 #gen-grid-opendiag-button p
-{
+{   font-size: 15px !important;
     float: unset;
 }
 
@@ -331,7 +347,8 @@ html, body
 }
 
 #gen-grid-fileselect-button
-{   float:right;
+{   cursor:pointer;
+    float:right;
     width:133px;
     margin-top:5px;
     margin-bottom:5px;
@@ -392,6 +409,10 @@ html, body
 }
 */
 
+#gen-grid-fileselect-input
+{   cursor:pointer;
+}
+
 .gen-grid-button
 {   position:relative;
     background-color: rgba(0,0,0,0.1);
@@ -402,7 +423,7 @@ html, body
 }
 
 .gen-grid-button:active
-{   background-color: rgba(0,0,0,0.3) !important; 
+{   background-color: rgba(0,0,0,0.3); 
 }
 
 .gen-grid-button:hover
@@ -437,7 +458,7 @@ html, body
 }
 
 .file-input-container
-{
+{   cursor: pointer;
     overflow: hidden;
     position:relative;
 }

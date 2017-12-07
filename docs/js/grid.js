@@ -66,6 +66,18 @@ function Grid()
         canvas.mouse_up = mouse_up;
         canvas.mouse_enter = mouse_enter;
         canvas.mouse_leave = mouse_leave;
+
+        // Listen for mouseup event over doc to make sure that recording
+        // is still stopped when mouse is released outside of grid 
+        document.addEventListener('mouseup', function (e) 
+        {
+            if(animation.is_recording())
+            {
+                grid.draw_session_end();
+                animation.stop_recording();
+            }
+            
+        }, false);
     }
 
     Grid.prototype.update = function()
