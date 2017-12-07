@@ -1,8 +1,8 @@
 function RequestManager()
 {
     this.requests = new Array();
-    //this.server_url = 'http://toposketch.vusd.nz/grids';
-    this.server_url = 'http://127.0.0.1:5000/grids';
+    this.server_url = 'http://toposketch.vusd.nz/grids';
+    //this.server_url = 'http://127.0.0.1:5000/grids';
     //this.server_url = 'http://toposketch.vusd.nz/grids';
     //this.test_url = './js/server_up.json';
     this.test_url = 'http://toposketch.vusd.nz/js/server_up.json';
@@ -79,7 +79,7 @@ function Request()
     this.poll_start = Date.now();
     this.last_polltime = 0;
     this.poll_interval = 2000; // in milliseconds 
-    this.poll_timeout = 600000; // in milliseconds
+    this.poll_timeout = 180000; // in milliseconds
 
     this.post_request_sent = false;
     this.dynamic_status = false; // When this is true, the status of the dialog box button will be overriden with a dynamic message (hacky but works).
@@ -93,7 +93,7 @@ function Request()
         {
             console.log("Request polling...");
             this.last_polltime = Date.now();
-            console.log(this.post_request_sent);
+            //console.log(this.post_request_sent);
             if(!this.post_request_sent)
             {   
                 this.request_grid();
@@ -116,6 +116,7 @@ function Request()
 
     Request.prototype.close = function()
     {   console.log("Request closing...")
+        generate_grid_dialog.update_status("", -1);
         this.done = true;
     }
 
@@ -150,10 +151,10 @@ function Request()
                     console.log("File received by server and assigned UUID of " + this.uuid);
                     _request.request_grid();
                 }
-                else if(request.readyState == XMLHttpRequest.LOADING && request.status == 200) 
+                else if(request.readyState == XMLHttpRequest.LOADING) 
                 {
                     console.log("Uploading Image!")
-                    generate_grid_dialog.update_status("Uploading Image... (Click to Cancel)",-1);
+                    //generate_grid_dialog.update_status("Uploading Image... (Click to Cancel)",-1);
                 }
                 else if(request.readyState == XMLHttpRequest.DONE && request.status != 200) 
                 {   console.log("Upload Failed: " + request.status)
@@ -164,6 +165,7 @@ function Request()
 
             //===== Sending Request =====//
             console.log("Sending file to server via POST...");
+            generate_grid_dialog.update_status("Uploading Image... (Click to Cancel)",-1);
             request.open("POST", requests.server_url);
             request.send(data);
         }

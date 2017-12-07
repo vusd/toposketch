@@ -16,9 +16,16 @@ function Display()
     Display.prototype.display_face = function(amt_x, amt_y)
     {   
         let grid_pos = animation.data.get_grid_position(amt_x, amt_y);
-        context.drawImage(animation.data.image,
-                          grid_pos.x, grid_pos.y, grid_pos.w, grid_pos.h, 
-                          0, 0, canvas.width, canvas.height);
+        try
+        {   context.drawImage(animation.data.image,
+                grid_pos.x, grid_pos.y, grid_pos.w, grid_pos.h, 
+                0, 0, canvas.width, canvas.height);
+        }
+        catch(e)
+        {
+            console.log(e);
+        }
+        
         /*
         // Displays part of the Animation.data.image based on amt_x & amt_y (0 to 1.0)
         // Find the size of a each grid square

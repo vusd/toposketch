@@ -100,7 +100,12 @@ function Grid()
         context.fillStyle = 'rgb(0,0,0)';
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.globalAlpha = alphas;
-        context.drawImage(animation.data.image, 0, 0, canvas.width, canvas.height); 
+        try
+        {   context.drawImage(animation.data.image, 0, 0, canvas.width, canvas.height);
+        }
+        catch(e)
+        {   console.log(e);
+        }
         context.globalAlpha = 1;
 
     }

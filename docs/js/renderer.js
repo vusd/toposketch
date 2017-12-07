@@ -151,9 +151,12 @@ function Renderer()
             this.rendered_context.fillStyle = 'rgb('+ Math.floor(255*Math.random()) +',200,255)';
             this.rendered_context.fillRect(0,0,this.rendered_canvas.width, this.rendered_canvas.height);
             
-            this.rendered_context.drawImage(this.animation_data.image,
-                                            grid_pos.x, grid_pos.y, grid_pos.w, grid_pos.h, 
-                                            0, 0, this.rendered_canvas.width, this.rendered_canvas.height);
+            try
+			{	this.rendered_context.drawImage(this.animation_data.image,grid_pos.x, grid_pos.y, grid_pos.w, grid_pos.h, 0, 0, this.rendered_canvas.width, this.rendered_canvas.height);
+			}
+			catch(e)
+			{	console.log(e);
+			}
             
             let image_data = this.rendered_context.getImageData(0,0,this.rendered_canvas.width,this.rendered_canvas.height);
             

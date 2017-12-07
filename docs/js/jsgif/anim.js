@@ -97,7 +97,12 @@ this.gifalizer = function() //function, called from DOM to build gif.
 			var scratchCanvasContext = scratchCanvas.getContext("2d");
 			scratchCanvasContext.fillStyle = "#FFFFFF";
 			scratchCanvasContext.fillRect(0,0,scratchCanvas.width, scratchCanvas.height);
-			scratchCanvasContext.drawImage(this,0,0,scratchCanvas.width,scratchCanvas.height);
+			try
+			{	scratchCanvasContext.drawImage(this,0,0,scratchCanvas.width,scratchCanvas.height);
+			}
+			catch(e)
+			{	console.log(e);
+			}
 			var imdata = scratchCanvasContext.getImageData(0,0, scratchCanvas.width, scratchCanvas.height).data;
 			console.log(this.index);
 			worker.postMessage({"frame_index": this.index, "delay": delay, "frame_length":paintedCanvases.length-1, "height":scratchCanvas.height, "width":scratchCanvas.width, "imageData":imdata}); //imarray.join(',')
