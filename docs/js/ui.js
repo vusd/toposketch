@@ -177,7 +177,7 @@ function SaveJsonButton()
     this.on_click = function(e)
     {
         //console.log("Saving JSON");
-        //button.append_json(); // Allows "right click and save as" functionality
+        button.append_json(); // Allows "right click and save as" functionality
     }
 
     SaveJsonButton.prototype.append_json = function()
